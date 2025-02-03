@@ -20,6 +20,9 @@ permissions:
   pages: write
   id-token: write
 
+env:
+  PREVIEW_BRANCH: gh-pages
+
 jobs:
   # Build job
   deploy-preview:
