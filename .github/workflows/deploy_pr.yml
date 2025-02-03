@@ -47,6 +47,9 @@ jobs:
         env:
           PAGES_REPO_NWO: ${{ github.repository }}
           JEKYLL_ENV: production
+      - name: Remove redirect_to
+        run: |
+          rm _site/index.html
       - name: Preview deployment
         id: preview
         uses: rossjrw/pr-preview-action@v1
