@@ -1,4 +1,4 @@
 ---
 layout: default
-redirect_to: "/v2/"
+redirect_to: " {{ 'v2' | relative_url}} "
 ---
