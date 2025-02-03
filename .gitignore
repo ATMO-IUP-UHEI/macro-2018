@@ -1,0 +1,3 @@
+# jekyll ignore
+_site/
+Gemfile.lock

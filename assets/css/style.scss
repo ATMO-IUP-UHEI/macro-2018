@@ -1,0 +1,168 @@
+---
+---
+
+@import "{{ site.theme }}";
+
+// Define new modern colors
+$header-bg-color: lightgrey;
+$header-bg-color-secondary: lightgrey;
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.sidebar {
+  float: left;
+  width: 25%;
+  background-color: #f5f5f5;
+  padding: 1rem;
+  ul {
+    list-style-type: none;
+  }
+  
+  @include large {
+    display: flex; // Show sidebar on large screens
+  }
+  @include medium {
+    display: none; // Hide sidebar on medium and smaller screens
+  }
+  @include small {
+    display: none; // Hide sidebar on small screens
+  }
+}
+#hamburger-menu {
+  display: none; // Hide hamburger menu button by default
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  @include medium {
+    display: block; // Show hamburger menu button on medium and smaller screens
+  }
+  @include small {
+    display: block; // Show hamburger menu button on small screens
+  }
+}
+.main-content {
+  display: flex;
+  flex-direction: column;
+  margin-left: 25%;
+  padding: 1rem;
+
+  @include medium {
+    margin-left: 0; // Remove left margin on medium and smaller screens
+  }
+  @include small {
+    margin-left: 0; // Remove left margin on small screens
+  }
+
+  // Apply the new headline color within the main content
+  h1, h2, h3, h4, h5, h6 {
+    color: $section-headings-color;
+  }
+}
+.page-header {
+  color: $header-heading-color;
+  text-align: center;
+  overflow: hidden; /* Ensure the image does not spill over */
+  position: relative; /* Position relative to center the image */
+  background-image: none; /* Overwrite the native background-image property */
+  background-color: transparent; /* Overwrite the native background-color property */
+  height: auto; /* Ensure it has a height */
+
+  @include large {
+    padding: 5rem 6rem;
+  }
+
+  @include medium {
+    padding: 3rem 4rem;
+  }
+
+  @include small {
+    padding: 2rem 1rem;
+  }
+
+  .page-header-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: $header-bg-color;
+    background-image: linear-gradient(170deg, $header-bg-color-secondary, $header-bg-color);
+    z-index: -3; /* Ensure it is behind the rotated image */
+    img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate3d(6, -5,  5, 90deg) scale(1.25); /* Center and rotate the image */
+      z-index: -1;
+    }
+    .page-header-bg-eur {
+      img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) rotate3d(6, -5,  5, 90deg) scale(1.25) scale(2.0); /* Center and rotate the image */
+        z-index: -2;
+        opacity: 0.6;
+      }
+    }
+  }
+
+}
+.project-tagline {
+  opacity: 0.85;
+}
+
+// Additional styles for the sidebar when displayed on smaller screens
+@media (max-width: 1030px) {
+  .sidebar {
+    width: 100%; /* Stretch over the whole screen width */
+    display: none; /* Show sidebar */
+    z-index: 1000; /* Ensure it is above other content */
+    overflow-y: auto; /* Allow scrolling */
+  }
+
+  .main-content {
+    margin-left: 0; /* Remove left margin */
+  }
+
+  #fullplot {
+    width: 100%; /* Ensure full width */
+  }
+}
+
+#version-switcher {
+  // color of text black
+  color: black;
+  padding: 15px 25px;
+  opacity: 0.8;
+}
+
+.versionid {
+  font-size: 20px;
+  z-index: 1000;
+}
+.headline {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+  option:checked {
+    display: none; /* Hide the selected option */
+  }
+}
+#domain-container select {
+  option:checked {
+    display: block; /* Hide the selected option */
+  }
+}

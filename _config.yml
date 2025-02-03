@@ -1,0 +1,18 @@
+title: MACRO-2018
+tagline: <b>M</b>etropolitan <b>A</b>rea <b>C</b>O<sub>x</sub> <b>R</b>ec<b>O</b>rd of Germany 2018
+description: The MACRO-2018 dataset is a high-resolution dataset of CO and CO<sub>2</sub> concentrations in metropolitan areas in Germany in 2018.
+url: https://atmo-iup-uhei.github.io
+baseurl: /macro-2018
+logo: /macro-2018/favicon.ico
+show_downloads: false
+remote_theme: pages-themes/cayman@v0.2.0
+relative_links:
+  enabled:     true
+  collections: false
+include:
+- v1/script.js
+- v2/script.js
+plugins:
+- jekyll-remote-theme
+- jekyll-relative-links
+- jekyll-redirect-from
