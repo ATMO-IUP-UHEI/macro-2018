@@ -63,7 +63,12 @@ async function plotData(arr, time, z) {
     Plotly.restyle('myDiv', update);
     Plotly.relayout('myDiv', layoutUpdate);
   } catch (error) {
-    console.error("Error plotting data:", error);
+    if (error.message.includes("index out of bounds")) {
+      fetchVariableData(currentVariable, currentDomain, time);
+    }
+    else {
+      console.error("Error plotting data:", error);
+    }
   }
 }
 
@@ -188,7 +193,7 @@ function togglePlay() {
 
 // Initialize the script
 async function initialize() {
-  arr = await fetchVariableData(currentVariable, currentDomain);
+  arr = await fetchVariableData(currentVariable, currentDomain, 0);
   times = await zarr.open(new zarr.FetchStore("https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d01_2018.zarr/Times/"), { kind: "array" });
   let timevalues = await zarr.get(times, [null]);
   timesArray = [];
