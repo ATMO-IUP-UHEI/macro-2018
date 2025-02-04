@@ -86,7 +86,7 @@
       <button id="incrementButton" onclick="incrementTime()">&#9197;</button>
       <button id="increaseSpeedButton" onclick="increaseSpeed(event)">+</button>
     </div>
-    <div id="zlabel">* - see <a href="{{ '/v2/documentation.html/#computed-variables' | relative_url }}">documentation</a></div>
+    <div id="zlabel">* - see <a href="{{ '/v2/documentation.html#computed-variables' | relative_url }}">documentation</a></div>
   </div>
 </div>
 
