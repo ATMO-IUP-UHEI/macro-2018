@@ -38,7 +38,7 @@
             <option value="CO_TOTAL">Total CO*</option>
             <option value="CO_BCK">Background CO</option>
             <option value="CO_ANT">CO Anthro</option>
-            <option value="wind_speed">Wind Speed</option>
+            <option value="wind_speed">Wind Speed*</option>
           </select>
         </div>
       </div>
@@ -86,7 +86,7 @@
       <button id="incrementButton" onclick="incrementTime()">&#9197;</button>
       <button id="increaseSpeedButton" onclick="increaseSpeed(event)">+</button>
     </div>
-    <div id="zlabel">* - see [documentation](documentation.md/#computed-variables)</label>
+    <div id="zlabel">* - see <a href="{{ '/v2/documentation.html/#computed-variables' | relative_url }}">documentation</a></div>
   </div>
 </div>
 
