@@ -24,6 +24,8 @@ permissions:
 env:
   PREVIEW_BRANCH: gh-pages
 
+concurrency: preview-${{ github.ref }}
+
 jobs:
   # Build job
   deploy-preview:
@@ -31,6 +33,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Replace baseurl
+        run: |
+          sed -i "s@\(baseurl: .*\)@\1\/pr-preview\/pr-${{github.event.number}}@" _config.yml
+          cat _config.yml
       - name: Setup Ruby
         # https://github.com/ruby/setup-ruby/releases/tag/v1.207.0
         uses: ruby/setup-ruby@4a9ddd6f338a97768b8006bf671dfbad383215f4
@@ -47,33 +53,14 @@ jobs:
         env:
           PAGES_REPO_NWO: ${{ github.repository }}
           JEKYLL_ENV: production
-      - name: Remove redirect_to
-        run: |
-          rm _site/index.html
       - name: Preview deployment
         id: preview
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./_site
           preview-branch: ${{ env.PREVIEW_BRANCH }}
-          comment: false
-
-      - uses: marocchino/sticky-pull-request-comment@v2
-        if: steps.preview-step.outputs.deployment-action == 'deploy' && env.deployment_status == 'success'
-        with:
-          header: pr-preview
-          message: |
-            [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
-            :---:
-            | <p></p> :rocket: View preview at <br> ${{ steps.preview-step.outputs.preview-url }} <br><br>
-            | <h6>Built to branch [`${{ env.PREVIEW_BRANCH }}`](${{ github.server_url }}/${{ github.repository }}/tree/${{ env.PREVIEW_BRANCH }}) at ${{ steps.preview-step.outputs.action-start-time }}. <br> Preview will be ready when the [GitHub Pages deployment](${{ github.server_url }}/${{ github.repository }}/deployments) is complete. <br><br> </h6>
-
-      - uses: marocchino/sticky-pull-request-comment@v2
-        if: steps.preview-step.outputs.deployment-action == 'remove' && env.deployment_status == 'success'
-        with:
-          header: pr-preview
-          message: |
-            [PR Preview Action](https://github.com/rossjrw/pr-preview-action) ${{ steps.preview-step.outputs.action-version }}
-            :---:
-            Preview removed because the pull request was closed.
-            ${{ steps.preview-step.outputs.action-start-time }}
+          comment: true
+      - name: Output base URL
+        env: 
+          ECHO: ${{ toJson(steps.preview.outputs) }}
+        run: echo "$ECHO"
