@@ -4,10 +4,10 @@
     <div id="controls">
       <div id="dropdown-controls">
         <div id="blscheme-container">
-          <label for="blschemeDropdown">BL Scheme:</label>
+          <label for="blschemeDropdown">Boundary Layer scheme:</label>
           <select id="blschemeDropdown" onchange="updatePlot()">
-            <option value="MYJ">MYJ</option>
-            <option value="YSU">YSU</option>
+            <option title="Mellor-Yamada-Janjic" value="MYJ">MYJ</option>
+            <option title="Yonsei University" value="YSU">YSU</option>
           </select>
         </div>
         <div id="domain-container">
