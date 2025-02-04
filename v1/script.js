@@ -9,8 +9,14 @@ let speed = 500;
 let arr, times, timesArray;
 
 // Fetch and open the zarr array for the selected variable and domain
-async function fetchVariableData(variable, domain) {
-  const store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018.zarr/${variable}/`);
+async function fetchVariableData(variable, domain, time) {
+  let store
+  if (domain === "2" && time > 90) {
+    store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018_from_04.zarr/${variable}/`);
+  }
+  else {
+    store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018.zarr/${variable}/`);
+  }
   return await zarr.open(store, { kind: "array" });
 }
 
@@ -18,8 +24,8 @@ async function fetchVariableData(variable, domain) {
 async function updatePlot() {
   currentVariable = document.getElementById('variableDropdown').value;
   currentDomain = document.getElementById('domainDropdown').value;
-  arr = await fetchVariableData(currentVariable, currentDomain);
-  plotData(arr, parseInt(document.getElementById('timeSlider').value), parseInt(document.getElementById('zslider').value));
+  arr = await fetchVariableData(currentVariable, currentDomain, currentIndex);
+  plotData(arr, currentIndex, parseInt(document.getElementById('zslider').value));
 }
 
 // Reshape the zarr data to a 2D array
@@ -57,7 +63,12 @@ async function plotData(arr, time, z) {
     Plotly.restyle('myDiv', update);
     Plotly.relayout('myDiv', layoutUpdate);
   } catch (error) {
-    console.error("Error plotting data:", error);
+    if (error.message.includes("index out of bounds")) {
+      fetchVariableData(currentVariable, currentDomain, time);
+    }
+    else {
+      console.error("Error plotting data:", error);
+    }
   }
 }
 
@@ -182,7 +193,7 @@ function togglePlay() {
 
 // Initialize the script
 async function initialize() {
-  arr = await fetchVariableData(currentVariable, currentDomain);
+  arr = await fetchVariableData(currentVariable, currentDomain, 0);
   times = await zarr.open(new zarr.FetchStore("https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d01_2018.zarr/Times/"), { kind: "array" });
   let timevalues = await zarr.get(times, [null]);
   timesArray = [];

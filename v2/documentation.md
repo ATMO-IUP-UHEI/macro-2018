@@ -34,7 +34,9 @@ title: Documentation
 
 ### WRF tracer field info
 
-| Variable    | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
+The `BCK` fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
+
+| Variable in Swift dataset | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
 |:------------|:-------------------|:------------|:-----------|:---------------|:------------------------|
 | CO2_TRAFFIC | CO<sub>2</sub>     | fossil      | TNO        | area, point    | F1, F2, F3, F4, G, H, I |
 | CO2_AREA    | CO<sub>2</sub>     | fossil      | TNO        | area           | all except TRAFFIC      |
@@ -46,8 +48,17 @@ title: Documentation
 | CO_ANT      | CO                 | bio, fossil | TNO        | area, point    | all                     |
 | CO_BCK      | CO                 | bio, fossil | CAMS conc. | all            | all                     |
 
+### Computed variables
 
-The `BCK` fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
+The following variables are computed from some of the above WRF output fields.
+
+| Display Name       | Variable in Swift dataset | Calculation                                               |
+|:-------------------|:--------------------------|:----------------------------------------------------------|
+| Anthropogenic CO2  | CO2_ANTHRO                | CO2_TRAFFIC + CO2_AREA + CO2_POINT + CO2_BF               |
+| Total CO2          | CO2_TOTAL                 | CO2_ANTHRO + CO2_BCK + CO2_VPRM - 407.                    |
+| Total CO2 (Bio v2) | CO2_TOTAL_V2              | CO2_ANTHRO + CO2_BCK + CO2_VPRM_V2 - 407.                 |
+| Total CO           | CO_TOTAL                  | CO_ANT + CO_BCK                                           |
+| Wind Speed         | wind_speed                | [metpy.calc.wind_speed](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html)([wind_speed_north, wind_speed_east](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216))  |
 
 ### Computational structure
 

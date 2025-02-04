@@ -32,7 +32,7 @@ import xarray as xr
 from zarr.storage import FSStore, LRUStoreCache
 ```
 Then, we generate a cached filestore from the Objects in the DKRZ OpenStack Swift.
-More information regarding the domains can be found [here](documentation.md).
+More information regarding the domains can be found [here](documentation.md#domain-setup).
 ```
 domain = 4  # Berlin
 blscheme = "MYJ"
@@ -43,4 +43,4 @@ store_cached = LRUStoreCache(store_nocache, max_size=2**30)
 ds = xr.open_zarr(store_cached)
 ```
 Finally we can use the remote data like it were on our computer locally.
-The available WRF meteorology and tracer fields are described in the [documentation page](documentation.md).
+The available WRF meteorology and tracer fields are described in the [documentation page](documentation.md#data-structure).
