@@ -9,8 +9,13 @@ let speed = 500;
 let arr, times, timesArray;
 
 // Fetch and open the zarr array for the selected variable and domain
-async function fetchVariableData(variable, domain) {
-  const store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018.zarr/${variable}/`);
+async function fetchVariableData(variable, domain, time) {
+  if (domain === "2" && time > 90) {
+    const store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018_from_04.zarr/${variable}/`);
+  }
+  else {
+    const store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018.zarr/${variable}/`);
+  }
   return await zarr.open(store, { kind: "array" });
 }
 
@@ -18,8 +23,8 @@ async function fetchVariableData(variable, domain) {
 async function updatePlot() {
   currentVariable = document.getElementById('variableDropdown').value;
   currentDomain = document.getElementById('domainDropdown').value;
-  arr = await fetchVariableData(currentVariable, currentDomain);
-  plotData(arr, parseInt(document.getElementById('timeSlider').value), parseInt(document.getElementById('zslider').value));
+  arr = await fetchVariableData(currentVariable, currentDomain, currentIndex);
+  plotData(arr, currentIndex, parseInt(document.getElementById('zslider').value));
 }
 
 // Reshape the zarr data to a 2D array
