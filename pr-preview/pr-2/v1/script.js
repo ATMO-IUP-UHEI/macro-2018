@@ -12,11 +12,12 @@ let arr, times, timesArray;
 async function fetchVariableData(variable, domain, time) {
   if (domain === "2" && time > 90) {
     const store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018_from_04.zarr/${variable}/`);
+    return await zarr.open(store, { kind: "array" });
   }
   else {
     const store = new zarr.FetchStore(`https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d0${domain}_2018.zarr/${variable}/`);
+    return await zarr.open(store, { kind: "array" });
   }
-  return await zarr.open(store, { kind: "array" });
 }
 
 // Update the variable and plot data
