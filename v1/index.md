@@ -99,6 +99,7 @@ This work is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4
 
 This work is part of the joint project ITMS, funded by the German BMBF under reference number 01LK2102D.
 This work used resources of the Deutsches Klimarechenzentrum (DKRZ), allocated by the scientific steering committee (WLA) under project ID bb1170 and bm1400.
+High resolution emission data as input for the model was prepared by TNO, the Netherlands following the description in [[Super et al. (2020)]](https://doi.org/10.5194/acp-20-1795-2020).
 
 
 ## References
