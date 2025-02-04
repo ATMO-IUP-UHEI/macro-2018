@@ -34,7 +34,7 @@ title: Documentation
 
 ### WRF tracer field info
 
-| Variable    | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
+| Variable in Swift dataset | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
 |:------------|:-------------------|:------------|:-----------|:---------------|:------------------------|
 | CO2_TRAFFIC | CO<sub>2</sub>     | fossil      | TNO        | area, point    | F1, F2, F3, F4, G, H, I |
 | CO2_AREA    | CO<sub>2</sub>     | fossil      | TNO        | area           | all except TRAFFIC      |
@@ -46,8 +46,19 @@ title: Documentation
 | CO_ANT      | CO                 | bio, fossil | TNO        | area, point    | all                     |
 | CO_BCK      | CO                 | bio, fossil | CAMS conc. | all            | all                     |
 
-
 The `BCK` fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
+
+### Computed variables
+
+The following variables are computed from the WRF tracer fields.
+
+| Display Name       | Variable in Swift dataset | Calculation                                               |
+|:-------------------|:--------------------------|:----------------------------------------------------------|
+| Anthropogenic CO2  | CO2_ANTHRO                | CO2_TRAFFIC + CO2_AREA + CO2_POINT + CO2_BF               |
+| Total CO2          | CO2_TOTAL                 | CO2_ANTHRO + CO2_VPRM - 407. + CO2_BCK                    |
+| Total CO2 (Bio v2) | CO2_TOTAL_V2              | CO2_ANTHRO + CO2_VPRM_V2 - 407. + CO2_BCK                 |
+| Total CO           | CO_TOTAL                  | CO_ANT + CO_BCK                                           |
+| Wind Speed         | Wind Speed                | metpy.calc.wind_speed(wind_speed_north, wind_speed_east)  |
 
 ### Computational structure
 
