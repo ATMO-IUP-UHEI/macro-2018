@@ -25,9 +25,9 @@
         <div id="variable-container">
           <label for="variableDropdown">Variable:</label>
           <select id="variableDropdown" onchange="updatePlot()">
-            <option value="CO2_TOTAL">Total CO2</option>
-            <option value="CO2_TOTAL_V2">Total CO2 (Bio v2)</option>
-            <option value="CO2_ANTHRO">Anthropogenic CO2</option>
+            <option value="CO2_TOTAL">Total CO2*</option>
+            <option value="CO2_TOTAL_V2">Total CO2 (Bio v2)*</option>
+            <option value="CO2_ANTHRO">Anthropogenic CO2*</option>
             <option value="CO2_BCK">Background CO2</option>
             <option value="CO2_TRAFFIC">CO2 Traffic</option>
             <option value="CO2_POINT">CO2 Point Sources</option>
@@ -35,10 +35,10 @@
             <option value="CO2_BF">CO2 Biofuel</option>
             <option value="CO2_VPRM">CO2 Biogenic</option>
             <option value="CO2_VPRM_V2">CO2 Biogenic v2</option>
-            <option value="CO_TOTAL">Total CO</option>
+            <option value="CO_TOTAL">Total CO*</option>
             <option value="CO_BCK">Background CO</option>
             <option value="CO_ANT">CO Anthro</option>
-            <option value="wind_speed">Wind Speed</option>
+            <option value="wind_speed">Wind Speed*</option>
           </select>
         </div>
       </div>
@@ -86,6 +86,7 @@
       <button id="incrementButton" onclick="incrementTime()">&#9197;</button>
       <button id="increaseSpeedButton" onclick="increaseSpeed(event)">+</button>
     </div>
+    <div id="zlabel">* - see <a href="{{ '/v2/documentation.html#computed-variables' | relative_url }}">documentation</a></div>
   </div>
 </div>
 
