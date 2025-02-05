@@ -81,9 +81,13 @@ async function plotData(arr, time, z, min, max) {
   try {
     // Check if time divisible by 12 (half day) and preload next 24 hours in background
     let day = Number(time / 24);
-    if (time % 12 === 0 && (time / 12) % 2 !== 0) {
-      // preload next 24 hours in background
-      zarr.get(arr, [time+24, z, null, null]);
+    try {
+      if (time % 12 === 0 && (time / 12) % 2 !== 0) {
+        // preload next 24 hours in background
+        zarr.get(arr, [time+24, z, null, null]);
+      }
+    } catch (error) {
+      // ignore error
     }
     const view = await zarr.get(arr, [time, z, null, null]);
     const _min = await zarr.get(min, [day, z]);

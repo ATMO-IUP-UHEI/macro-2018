@@ -45,9 +45,13 @@ function reshapeTo2D(zarritaData) {
 async function plotData(arr, time, z) {
   try {
     // Check if time divisible by 12 (half day) and preload next 24 hours in background
-    if (time % 12 === 0 && (time / 12) % 2 !== 0) {
-      // preload next 24 hours in background
-      zarr.get(arr, [time+24, z, null, null]);
+    try {
+      if (time % 12 === 0 && (time / 12) % 2 !== 0) {
+        // preload next 24 hours in background
+        zarr.get(arr, [time+24, z, null, null]);
+      }
+    } catch (error) {
+      // ignore error
     }
     const view = await zarr.get(arr, [time, z, null, null]);
     const timeValue = timesArray[time];
