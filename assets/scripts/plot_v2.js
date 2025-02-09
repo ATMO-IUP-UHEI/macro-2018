@@ -43,7 +43,7 @@ class PlotV2 extends BasePlot {
     return await zarr.open(store, { kind: "array" });
   }
 
-  async initialFetch () {
+  async initialFetch() {
     [this.arr, this.min, this.max] = await Promise.all([
       this.fetchVariableData(
         this.currentVariable, this.currentBLScheme, this.currentDomain
