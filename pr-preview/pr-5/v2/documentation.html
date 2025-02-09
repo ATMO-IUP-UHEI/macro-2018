@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="/macro-2018/pr-preview/pr-5/assets/css/style.css?v=07a6a0f830036c0b21e7047d032ffc728ba09fdf">
+    <link rel="stylesheet" href="/macro-2018/pr-preview/pr-5/assets/css/style.css?v=176d2be4a2d0097951be43ca8fded06730d0eab6">
     <link rel="shortcut icon" href="/macro-2018/pr-preview/pr-5/favicon.ico" />
     <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>Documentation | MACRO-2018</title>
@@ -185,11 +185,12 @@
   </tbody>
 </table>
 
-<h2 id="data-structure">Data Structure</h2>
+<h2 id="variables">Variables</h2>
 
-<h3 id="wrf-tracer-field-info">WRF tracer field info</h3>
+<h3 id="wrf-tracer-fields">WRF tracer fields</h3>
 
-<p>The <code class="language-plaintext highlighter-rouge">BCK</code> fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.</p>
+<p>The <code class="language-plaintext highlighter-rouge">BCK</code> fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
+The <code class="language-plaintext highlighter-rouge">VPRM</code> fields are offset by 407 ppm.</p>
 
 <table>
   <thead>
@@ -236,7 +237,7 @@
       <td style="text-align: left">all</td>
     </tr>
     <tr>
-      <td style="text-align: left">CO2_VPRM</td>
+      <td style="text-align: left">CO2_VPRM (+407 ppm)</td>
       <td style="text-align: left">CO<sub>2</sub></td>
       <td style="text-align: left">bio</td>
       <td style="text-align: left">VPRM</td>
@@ -244,7 +245,7 @@
       <td style="text-align: left">-</td>
     </tr>
     <tr>
-      <td style="text-align: left">CO2_VPRM_V2</td>
+      <td style="text-align: left">CO2_VPRM_V2 (+407 ppm)</td>
       <td style="text-align: left">CO<sub>2</sub></td>
       <td style="text-align: left">bio</td>
       <td style="text-align: left">VPRM</td>
