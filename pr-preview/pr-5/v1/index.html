@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="stylesheet" href="/macro-2018/pr-preview/pr-5/assets/css/style.css?v=176d2be4a2d0097951be43ca8fded06730d0eab6">
+    <link rel="stylesheet" href="/macro-2018/pr-preview/pr-5/assets/css/style.css?v=c0d34cfa802e8706c26920b562279babe57bb0e4">
     <link rel="shortcut icon" href="/macro-2018/pr-preview/pr-5/favicon.ico" />
     <!-- Begin Jekyll SEO tag v2.8.0 -->
 <title>MACRO-2018 | Metropolitan Area COx RecOrd of Germany 2018</title>
@@ -83,7 +83,7 @@
       <div id="dropdown-controls">
         <div id="domain-container">
           <label for="domainDropdown">Domain:</label>
-          <select id="domainDropdown" onchange="updatePlot()">
+          <select id="domainDropdown">
             <option value="1">Europe</option>
             <option value="2">Germany</option>
             <option value="3">Rhine-Neckar</option>
@@ -95,10 +95,10 @@
         </div>
         <div id="variable-container">
           <label for="variableDropdown">Variable:</label>
-          <select id="variableDropdown" onchange="updatePlot()">
-            <option value="CO2_TRAFFIC">CO2 Traffic</option>
-            <option value="CO2_TST">CO2 Point Sources</option>
+          <select id="variableDropdown">
             <option value="CO2_ANT">CO2 Area Sources</option>
+            <option value="CO2_TST">CO2 Point Sources</option>
+            <option value="CO2_TRAFFIC">CO2 Traffic</option>
             <option value="CO2_BF">CO2 Biofuel</option>
             <option value="CO2_VPRM">CO2 Biogenic</option>
             <option value="CO_ANT">CO Anthro</option>
@@ -143,20 +143,20 @@
       <option value="8760" label="2019"></option>
     </datalist>
     <div id="timeWidget-buttons">
-      <button id="decreaseSpeedButton" onclick="decreaseSpeed(event)">-</button>
-      <button id="decrementButton" onclick="decrementTime()">&#9198;</button>
-      <button id="playButton" onclick="togglePlay()">&#9658;</button>
-      <button id="incrementButton" onclick="incrementTime()">&#9197;</button>
-      <button id="increaseSpeedButton" onclick="increaseSpeed(event)">+</button>
+      <button id="decreaseSpeedButton">-</button>
+      <button id="decrementTimeButton">&#9198;</button>
+      <button id="playButton">&#9658;</button>
+      <button id="incrementTimeButton">&#9197;</button>
+      <button id="increaseSpeedButton">+</button>
     </div>
   </div>
 </div>
 
-<script type="module" src="/macro-2018/pr-preview/pr-5/v1/script.js"></script>
+<script type="module" src="/macro-2018/pr-preview/pr-5/assets/scripts/plot_v1.js"></script>
 
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
-<script src="/macro-2018/pr-preview/pr-5/assets/decoder.js" defer=""></script>
+<script src="/macro-2018/pr-preview/pr-5/assets/scripts/decoder.js" defer=""></script>
 
 <h2 id="general">General</h2>
 

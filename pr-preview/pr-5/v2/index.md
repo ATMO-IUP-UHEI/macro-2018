@@ -5,14 +5,14 @@
       <div id="dropdown-controls">
         <div id="blscheme-container">
           <label for="blschemeDropdown">Boundary Layer scheme:</label>
-          <select id="blschemeDropdown" onchange="updatePlot()">
+          <select id="blschemeDropdown">
             <option title="Mellor-Yamada-Janjic" value="MYJ">MYJ</option>
             <option title="Yonsei University" value="YSU">YSU</option>
           </select>
         </div>
         <div id="domain-container">
           <label for="domainDropdown">Domain:</label>
-          <select id="domainDropdown" onchange="updatePlot()">
+          <select id="domainDropdown">
             <option value="1">Europe</option>
             <option value="2">Germany</option>
             <option value="3">Rhine-Neckar</option>
@@ -24,7 +24,7 @@
         </div>
         <div id="variable-container">
           <label for="variableDropdown">Variable:</label>
-          <select id="variableDropdown" onchange="updatePlot()">
+          <select id="variableDropdown">
             <option value="CO2_TOTAL">Total CO2*</option>
             <option value="CO2_TOTAL_V2">Total CO2 (Bio v2)*</option>
             <option value="CO2_ANTHRO">Anthropogenic CO2*</option>
@@ -80,19 +80,19 @@
       <option value="8760" label="2019"></option>
     </datalist>
     <div id="timeWidget-buttons">
-      <button id="decreaseSpeedButton" onclick="decreaseSpeed(event)">-</button>
-      <button id="decrementButton" onclick="decrementTime()">&#9198;</button>
-      <button id="playButton" onclick="togglePlay()">&#9658;</button>
-      <button id="incrementButton" onclick="incrementTime()">&#9197;</button>
-      <button id="increaseSpeedButton" onclick="increaseSpeed(event)">+</button>
+      <button id="decreaseSpeedButton">-</button>
+      <button id="decrementTimeButton">&#9198;</button>
+      <button id="playButton">&#9658;</button>
+      <button id="incrementTimeButton">&#9197;</button>
+      <button id="increaseSpeedButton">+</button>
     </div>
     <div id="zlabel">* - see <a href="{{ '/v2/documentation.html#computed-variables' | relative_url }}">documentation</a></div>
   </div>
 </div>
 
-<script type="module" src="{{ '/v2/script.js' | relative_url }}"></script>
+<script type="module" src="{{ '/assets/scripts/plot_v2.js' | relative_url }}"></script>
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<script src="{{ '/assets/decoder.js' | relative_url}}" defer></script>
+<script src="{{ '/assets/scripts/decoder.js' | relative_url}}" defer></script>
 
 
 ## General
