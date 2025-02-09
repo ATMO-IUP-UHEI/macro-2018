@@ -144,10 +144,6 @@ body {
   opacity: 0.8;
 }
 
-.versionid {
-  font-size: 20px;
-  z-index: 1000;
-}
 .headline {
   display: flex;
   flex-direction: row;
@@ -162,6 +158,11 @@ select {
   }
 }
 #domain-container select {
+  option:checked {
+    display: block; /* Hide the selected option */
+  }
+}
+#blscheme-container select {
   option:checked {
     display: block; /* Hide the selected option */
   }

@@ -30,23 +30,24 @@ title: Documentation
 | 7         | Munich       | 1km        | 121x131 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d07_2018.zarr`           |
 
 
-## Data Structure
+## Variables
 
-### WRF tracer field info
+### WRF tracer fields
 
 The `BCK` fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
+The `VPRM` fields are offset by 407 ppm.
 
 | Variable in Swift dataset | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
-|:------------|:-------------------|:------------|:-----------|:---------------|:------------------------|
-| CO2_TRAFFIC | CO<sub>2</sub>     | fossil      | TNO        | area, point    | F1, F2, F3, F4, G, H, I |
-| CO2_AREA    | CO<sub>2</sub>     | fossil      | TNO        | area           | all except TRAFFIC      |
-| CO2_POINT   | CO<sub>2</sub>     | fossil      | TNO        | point          | all except TRAFFIC      |
-| CO2_BF      | CO<sub>2</sub>     | bio         | TNO        | area, point    | all                     |
-| CO2_VPRM    | CO<sub>2</sub>     | bio         | VPRM       | -              | -                       |
-| CO2_VPRM_V2 | CO<sub>2</sub>     | bio         | VPRM       | -              | -                       |
-| CO2_BCK     | CO<sub>2</sub>     | bio, fossil | CAMS conc. | all            | all                     |
-| CO_ANT      | CO                 | bio, fossil | TNO        | area, point    | all                     |
-| CO_BCK      | CO                 | bio, fossil | CAMS conc. | all            | all                     |
+|:--------------------------|:-------------------|:------------|:-----------|:---------------|:------------------------|
+| CO2_TRAFFIC               | CO<sub>2</sub>     | fossil      | TNO        | area, point    | F1, F2, F3, F4, G, H, I |
+| CO2_AREA                  | CO<sub>2</sub>     | fossil      | TNO        | area           | all except TRAFFIC      |
+| CO2_POINT                 | CO<sub>2</sub>     | fossil      | TNO        | point          | all except TRAFFIC      |
+| CO2_BF                    | CO<sub>2</sub>     | bio         | TNO        | area, point    | all                     |
+| CO2_VPRM (+407 ppm)       | CO<sub>2</sub>     | bio         | VPRM       | -              | -                       |
+| CO2_VPRM_V2 (+407 ppm)    | CO<sub>2</sub>     | bio         | VPRM       | -              | -                       |
+| CO2_BCK                   | CO<sub>2</sub>     | bio, fossil | CAMS conc. | all            | all                     |
+| CO_ANT                    | CO                 | bio, fossil | TNO        | area, point    | all                     |
+| CO_BCK                    | CO                 | bio, fossil | CAMS conc. | all            | all                     |
 
 ### Computed variables
 
