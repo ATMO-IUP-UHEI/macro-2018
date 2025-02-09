@@ -25,18 +25,18 @@ title: Documentation
 | 7         | Munich       | 1km        | 121x131 | 90m                   | -                      | `/v1/wrfout_d07_2018.zarr`           |
 
 
-## Data Structure
+## Variables
 
-### WRF tracer field info
+### WRF tracer fields
 
-| Variable    | Species            | Emiss. type | Inventory | Source type    | Sectors                 |
-|:------------|:-------------------|:------------|:----------|:---------------|:------------------------|
-| CO2_TRAFFIC | CO<sub>2</sub>     | fossil      | TNO       | area, point    | F1, F2, F3, F4, G, H, I |
-| CO2_ANT     | CO<sub>2</sub>     | fossil      | TNO       | area           | all except TRAFFIC      |
-| CO2_TST     | CO<sub>2</sub>     | fossil      | TNO       | point          | all except TRAFFIC      |
-| CO2_BF      | CO<sub>2</sub>     | bio         | TNO       | area, point    | all                     |
-| CO2_VPRM    | CO<sub>2</sub>     | bio         | VPRM      | -              | -                       |
-| CO_ANT      | CO                 | bio, fossil | TNO       | area, point    | all                     |
+| Variable            | Species            | Emiss. type | Inventory | Source type    | Sectors                 |
+|:--------------------|:-------------------|:------------|:----------|:---------------|:------------------------|
+| CO2_TRAFFIC         | CO<sub>2</sub>     | fossil      | TNO       | area, point    | F1, F2, F3, F4, G, H, I |
+| CO2_ANT             | CO<sub>2</sub>     | fossil      | TNO       | area           | all except TRAFFIC      |
+| CO2_TST             | CO<sub>2</sub>     | fossil      | TNO       | point          | all except TRAFFIC      |
+| CO2_BF              | CO<sub>2</sub>     | bio         | TNO       | area, point    | all                     |
+| CO2_VPRM (+407 ppm) | CO<sub>2</sub>     | bio         | VPRM      | -              | -                       |
+| CO_ANT              | CO                 | bio, fossil | TNO       | area, point    | all                     |
 
 ### Computational structure
 
