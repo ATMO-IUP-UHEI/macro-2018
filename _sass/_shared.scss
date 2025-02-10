@@ -65,11 +65,12 @@
   margin-bottom: 5px;
 }
 #timeWidget-buttons button {
-  padding: 0px 15px;
+  padding: 2px 15px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: #f0f0f0;
   cursor: pointer;
+  line-height: 100%;
 }
 #timeWidget-buttons button:hover {
   background-color: #e0e0e0;
