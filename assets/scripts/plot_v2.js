@@ -162,6 +162,7 @@ class PlotV2 extends BasePlot {
       this.preloadNextDayData(time, z);
 
       // Fetch view, _min, and _max concurrently.
+      console.log(time, z);
       const [view, _min, _max] = await Promise.all([
         zarr.get(this.arr, [time, z, null, null]),
         zarr.get(this.min, [Math.floor(time / 24), z]),
