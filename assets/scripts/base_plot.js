@@ -15,8 +15,8 @@ class BasePlot {
     this.currentIndex = 0;
     this.currentZVal = 0;
     this.speed = 200;
-    this.maxSpeed = 50;
-    this.minSpeed = 675;
+    this.maxFPS = 20;
+    this.minFPS = 1;
     this.arr = null;
     this.times = null;
     this.timesArray = [];
@@ -104,11 +104,10 @@ class BasePlot {
     return Math.round(1000 / fps);
   }
 
-  // Default speed controls (v1 uses fixed increments; v2 might use a different logic)
   increaseSpeed(event) {
     let fps = this.speedToFPS(this.speed);
-    fps += 2;
-    this.speed = Math.max(this.FPStoSpeed(fps), this.maxSpeed);
+    fps = Math.min(fps + 2, this.maxFPS);
+    this.speed = this.FPStoSpeed(fps);
     if (this.isPlaying) {
       this.setPlaybackInterval(this.speed);
     }
@@ -117,8 +116,8 @@ class BasePlot {
 
   decreaseSpeed(event) {
     let fps = this.speedToFPS(this.speed);
-    fps -= 2;
-    this.speed = Math.min(this.FPStoSpeed(fps), this.minSpeed);
+    fps = Math.max(fps - 2, this.minFPS);
+    this.speed = this.FPStoSpeed(fps);
     if (this.isPlaying) {
       this.setPlaybackInterval(this.speed);
     }
