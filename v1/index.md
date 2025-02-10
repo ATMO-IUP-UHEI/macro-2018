@@ -65,11 +65,13 @@
       <option value="8760" label="2019"></option>
     </datalist>
     <div id="timeWidget-buttons">
-      <button id="decreaseSpeedButton">-</button>
-      <button id="decrementTimeButton">&#9198;</button>
-      <button id="playButton">&#9658;</button>
-      <button id="incrementTimeButton">&#9197;</button>
-      <button id="increaseSpeedButton">+</button>
+      <button id="decreaseSpeedButton" class="fa fa-minus"></button>
+      <button id="decrementTimeButton" class="fa fa-fast-backward"></button>
+      <button id="stepTimeBackButton" class="fa fa-step-backward"></button>
+      <button id="playButton" class="fa fa-play"></button>
+      <button id="stepTimeForwardButton" class="fa fa-step-forward"></button>
+      <button id="incrementTimeButton" class="fa fa-fast-forward"></button>
+      <button id="increaseSpeedButton" class="fa fa-plus"></button>
     </div>
   </div>
 </div>

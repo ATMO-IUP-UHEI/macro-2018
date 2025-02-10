@@ -54,8 +54,8 @@ class BasePlot {
         timeSlider.value = timeSlider.min;
       }
       // Use the current z–slider value (or 0 if missing)
-      const zVal = parseInt(this.dom.zslider.value || 0);
-      this.plotData(this.currentIndex, zVal);
+      this.currentZVal = parseInt(this.dom.zslider.value || 0);
+      this.plotData(this.currentIndex, this.currentZVal);
     }, speed);
   }
 
@@ -64,13 +64,15 @@ class BasePlot {
     const timeSlider = this.dom.timeSlider;
     if (this.isPlaying) {
       clearInterval(this.playInterval);
-      playButton.innerHTML = "&#9658;"; // play icon
+      playButton.classList = [];
+      playButton.classList.add("fa", "fa-play");
       this.currentIndex = parseInt(timeSlider.value);
       timeSlider.step = 24; // restore step after stopping playback
     } else {
       timeSlider.step = 1; // finer control during playback
       timeSlider.value = this.currentIndex;
-      playButton.innerHTML = "&#9208;"; // pause icon
+      playButton.classList = [];
+      playButton.classList.add("fa", "fa-pause");
       this.setPlaybackInterval(this.speed);
     }
     this.isPlaying = !this.isPlaying;
@@ -114,6 +116,30 @@ class BasePlot {
     this.showFPS(event);
   }
 
+  stepForward() {
+    if (this.isPlaying) {
+      this.togglePlay();
+    }
+    this.dom.timeSlider.step = 1;
+    this.dom.timeSlider.value = this.currentIndex + 1;
+    this.currentIndex = parseInt(this.dom.timeSlider.value);
+    this.dom.timeSlider.step = 24;
+    this.plotData(this.currentIndex, this.currentZVal);
+  }
+
+  stepBackward() {
+    if (this.isPlaying) {
+      this.togglePlay();
+    }
+    if (this.currentIndex > 0) {
+      this.dom.timeSlider.step = 1;
+      this.dom.timeSlider.value = this.currentIndex - 1;
+      this.currentIndex = parseInt(this.dom.timeSlider.value);
+      this.dom.timeSlider.step = 24;
+      this.plotData(this.currentIndex, this.currentZVal);
+    }
+  }
+
   decreaseSpeed(event) {
     let fps = this.speedToFPS(this.speed);
     fps = Math.max(fps - 2, this.minFPS);
@@ -126,15 +152,17 @@ class BasePlot {
 
   showFPS(event) {
     const fps = Math.round(Math.round((1000 / this.speed) * 10) / 10);
+    event.target.classList = [];
     event.target.textContent = `${fps} fps`;
     setTimeout(() => this.restoreButtonText(event), 2000);
   }
 
   restoreButtonText(event) {
+    event.target.textContent = "";
     if (event.target.id === "increaseSpeedButton") {
-      event.target.textContent = "+";
+      event.target.classList.add("fa", "fa-plus");
     } else if (event.target.id === "decreaseSpeedButton") {
-      event.target.textContent = "-";
+      event.target.classList.add("fa", "fa-minus");
     }
   }
 
@@ -154,6 +182,8 @@ class BasePlot {
     this.dom.decreaseSpeedButton = document.getElementById("decreaseSpeedButton");
     this.dom.incrementTimeButton = document.getElementById("incrementTimeButton");
     this.dom.decrementTimeButton = document.getElementById("decrementTimeButton");
+    this.dom.stepTimeBackButton = document.getElementById("stepTimeBackButton");
+    this.dom.stepTimeForwardButton = document.getElementById("stepTimeForwardButton");
     this.dom.plotDiv = document.getElementById("myDiv");
   }
 
@@ -177,6 +207,8 @@ class BasePlot {
     this.dom.decreaseSpeedButton.addEventListener("click", (event) => this.decreaseSpeed(event));
     this.dom.incrementTimeButton.addEventListener("click", () => this.incrementTime());
     this.dom.decrementTimeButton.addEventListener("click", () => this.decrementTime());
+    this.dom.stepTimeForwardButton.addEventListener("click", () => this.stepForward());
+    this.dom.stepTimeBackButton.addEventListener("click", () => this.stepBackward());
     this.dom.playButton.addEventListener("click", () => this.togglePlay());
   }
 
