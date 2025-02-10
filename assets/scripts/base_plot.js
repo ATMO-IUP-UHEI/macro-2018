@@ -154,6 +154,7 @@ class BasePlot {
     this.dom.decreaseSpeedButton = document.getElementById("decreaseSpeedButton");
     this.dom.incrementTimeButton = document.getElementById("incrementTimeButton");
     this.dom.decrementTimeButton = document.getElementById("decrementTimeButton");
+    this.dom.plotDiv = document.getElementById("myDiv");
   }
 
   addListeners() {
