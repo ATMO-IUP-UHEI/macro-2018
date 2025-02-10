@@ -87,7 +87,7 @@ class PlotV2 extends BasePlot {
       hovermode: false,
       height: 470,
     };
-    Plotly.newPlot("myDiv", initialData, initialLayout);
+    Plotly.newPlot(this.dom.plotDiv, initialData, initialLayout);
     this.plotData(this.currentIndex, this.currentZVal);
   }
 
@@ -160,10 +160,12 @@ class PlotV2 extends BasePlot {
     try {
       // Preload next day data if conditions are met.
       this.preloadNextDayData(time, z);
+
+      // Fetch view, _min, and _max concurrently.
       const [view, _min, _max] = await Promise.all([
         zarr.get(this.arr, [time, z, null, null]),
         zarr.get(this.min, [Math.floor(time / 24), z]),
-        zarr.get(this.max, [Math.floor(time / 24), z]),
+        zarr.get(this.max, [Math.floor(time / 24), z])
       ]);
       const timeValue = this.timesArray[time];
 
@@ -171,24 +173,33 @@ class PlotV2 extends BasePlot {
         throw new Error("Empty data");
       }
 
+      // Process the view into a 2D array.
       const array2D = this.reshapeTo2D(view);
-      const scale = this.getColorscale(this.currentVariable);
-      const update = {
+
+      // Prepare the new trace update.
+      const newTrace = {
         z: [array2D],
-        colorscale: scale,
-        // You might also update zmin and zmax if you fetched stats.
-        zmin: _min,
-        zmax: _max,
+        colorscale: this.getColorscale(this.currentVariable),
         colorbar: {
           title: {
             text: this.getColorbarTitle(this.currentVariable),
-            side: "right",
-          },
-        },
+            side: "right"
+          }
+        }
       };
-      const layoutUpdate = { title: { text: `${this.currentVariable} at ${timeValue}`, y: 0.9 } };
-      Plotly.restyle("myDiv", update);
-      Plotly.relayout("myDiv", layoutUpdate);
+
+      if (time % 24 === 0) {
+        newTrace.zmin = _min;
+        newTrace.zmax = _max;
+      }
+
+      // Build a fresh layout update.
+      const newLayout = {
+        title: { text: `${this.currentVariable} at ${timeValue}`, y: 0.9 }
+      };
+
+      Plotly.update(this.dom.plotDiv, newTrace, newLayout);
+
     } catch (error) {
       console.error("Error plotting data:", error);
       if (error.message.includes("index out of bounds") && this.isPlaying) {
