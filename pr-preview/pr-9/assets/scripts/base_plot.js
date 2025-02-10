@@ -64,13 +64,15 @@ class BasePlot {
     const timeSlider = this.dom.timeSlider;
     if (this.isPlaying) {
       clearInterval(this.playInterval);
-      playButton.innerHTML = "&#9658;"; // play icon
+      playButton.classList = [];
+      playButton.classList.add("fa", "fa-plus");
       this.currentIndex = parseInt(timeSlider.value);
       timeSlider.step = 24; // restore step after stopping playback
     } else {
       timeSlider.step = 1; // finer control during playback
       timeSlider.value = this.currentIndex;
-      playButton.innerHTML = "&#9208;"; // pause icon
+      playButton.classList = [];
+      playButton.classList.add("fa", "fa-pause");
       this.setPlaybackInterval(this.speed);
     }
     this.isPlaying = !this.isPlaying;
