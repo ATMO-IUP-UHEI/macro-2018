@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/macro-2018/pr-preview/pr-7/assets/css/style.css?v=489888bd90f5cd352e40faf1cb2b99ddb821d980">
+    <link rel="shortcut icon" href="/macro-2018/pr-preview/pr-7/favicon.ico" />
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Documentation | MACRO-2018</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Documentation" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The MACRO-2018 dataset is a high-resolution dataset of CO and CO2 concentrations in metropolitan areas in Germany in 2018." />
+<meta property="og:description" content="The MACRO-2018 dataset is a high-resolution dataset of CO and CO2 concentrations in metropolitan areas in Germany in 2018." />
+<link rel="canonical" href="https://atmo-iup-uhei.github.io/macro-2018/pr-preview/pr-7/v2/documentation.html" />
+<meta property="og:url" content="https://atmo-iup-uhei.github.io/macro-2018/pr-preview/pr-7/v2/documentation.html" />
+<meta property="og:site_name" content="MACRO-2018" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Documentation" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"The MACRO-2018 dataset is a high-resolution dataset of CO and CO2 concentrations in metropolitan areas in Germany in 2018.","headline":"Documentation","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://atmo-iup-uhei.github.io/macro-2018/pr-preview/pr-7/macro-2018/favicon.ico"}},"url":"https://atmo-iup-uhei.github.io/macro-2018/pr-preview/pr-7/v2/documentation.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+  </head>
+  <body>
+    <header class="page-header" role="banner">
+       
+       
+      <div class="page-header-bg">
+        <div class="page-header-bg-eur">
+          <img src="/macro-2018/pr-preview/pr-7/assets/images/TNO_eur.png " />
+        </div>
+        <img src="/macro-2018/pr-preview/pr-7/assets/images/TNO_ger.png " />
+      </div>
+      <div class="headline">
+        <h1 class="project-name">MACRO-2018<sup><sub><sup>v2</sub></sup></h1>
+      </div>
+      <h2 class="project-tagline"><b>M</b>etropolitan <b>A</b>rea <b>C</b>O<sub>x</sub> <b>R</b>ec<b>O</b>rd of Germany 2018</h2>
+      
+
+<select id="version-switcher" onchange="window.location=this.value">
+  <option
+    value="/macro-2018/pr-preview/pr-7/v1/documentation.html"
+    
+  >
+    v1
+  </option>
+  <option
+    value="/macro-2018/pr-preview/pr-7/v2/documentation.html"
+    selected
+  >
+    v2
+  </option>
+</select>
+    </header>
+
+    <button id="hamburger-menu" onclick="toggleSidebar()">☰</button>
+
+    <div class="sidebar" id="sidebar">
+      <ul>
+        <li><b>v2</b></li>
+        <li><a href="/macro-2018/pr-preview/pr-7/v2">Home</a></li>
+        <li><a href="/macro-2018/pr-preview/pr-7/v2/documentation.html">Documentation</a></li>
+        <li>Data Access</li>
+        <ul>
+          <li><a href="/macro-2018/pr-preview/pr-7/v2/python.html">Python Access (recommended)</a></li>
+          <li><a href="https://swiftbrowser.dkrz.de/public/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v2/">HTTPS Access</a></li>
+        </ul>
+      </ul>
+    </div>
+
+    <main id="content" class="main-content" role="main">
+      <h2 id="input-data">Input data</h2>
+
+<ul>
+  <li>Meteorology: ECMWF ERA5</li>
+  <li>Emissions:
+    <ul>
+      <li>Anthropogenic:
+        <ul>
+          <li>Germany, BeNeLux, eastern France: (0.008° x 0.016°) TNO GHGco v4.1 2018 (personal communication Hugo Denier van den Gon, based on <a href="https://doi.org/10.5194/acp-20-1795-2020">[Super et al., 2020]</a>) </li>
+          <li>Elsewhere: (0.05° x 0.1°) TNO GHGco v4.0 2018 (personal communication Hugo Denier van den Gon, based on <a href="https://doi.org/10.5194/acp-20-1795-2020">[Super et al., 2020]</a>) </li>
+        </ul>
+      </li>
+      <li>Biogenic:
+        <ul>
+          <li><code class="language-plaintext highlighter-rouge">CO2_VPRM</code>: (0.008° x 0.016°) offline VPRM [J. Marshall, personal communication]</li>
+          <li><code class="language-plaintext highlighter-rouge">CO2_VPRM_V2</code>: (1km x 1km) offline VPRM, new version <a href="https://doi.org/10.5194/egusphere-2024-3692">[T. Glauch, personal communication]</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Landuse:
+    <ul>
+      <li>non-urban: (250m x 250m) CORINE to USGS (corine2usgs_2012v2020_250m) <a href="https://doi.org/10.5281/zenodo.4432128">[Breuer, 2021]</a></li>
+      <li>urban: (100m x 100m) Local Climate Zones <a href="https://github.com/matthiasdemuzere/w2w/tree/30bbaa12032bcbf7ccebdcb4f775f28803416c58">using w2w v0.5.0</a> <a href="https://doi.org/10.5194/essd-14-3835-2022">[Demuzere, 2022]</a></li>
+    </ul>
+  </li>
+  <li>Topography: (res cf. below) COP DEM [M. Galkowski, personal communication]</li>
+</ul>
+
+<h2 id="domain-setup">Domain setup</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Domain no</th>
+      <th style="text-align: left">Name</th>
+      <th style="text-align: left">Resolution</th>
+      <th style="text-align: left">Extent</th>
+      <th style="text-align: left">Topography resolution</th>
+      <th style="text-align: left">Grid nudging</th>
+      <th style="text-align: left">Zarr file</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">1</td>
+      <td style="text-align: left">Europe</td>
+      <td style="text-align: left">15km</td>
+      <td style="text-align: left">156x171</td>
+      <td style="text-align: left">30s</td>
+      <td style="text-align: left">3h Q, T, U,V above PBL</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">/v2/[MYJ,YSU]/wrfout_d01_2018.zarr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2</td>
+      <td style="text-align: left">Germany</td>
+      <td style="text-align: left">5km</td>
+      <td style="text-align: left">226x271</td>
+      <td style="text-align: left">30s</td>
+      <td style="text-align: left">3h Q, T, U,V above PBL</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">/v2/[MYJ,YSU]/wrfout_d02_2018.zarr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">3</td>
+      <td style="text-align: left">Rhine-Neckar</td>
+      <td style="text-align: left">1km</td>
+      <td style="text-align: left">121x156</td>
+      <td style="text-align: left">90m</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">/v2/[MYJ,YSU]/wrfout_d03_2018.zarr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">4</td>
+      <td style="text-align: left">Berlin</td>
+      <td style="text-align: left">1km</td>
+      <td style="text-align: left">176x171</td>
+      <td style="text-align: left">90m</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">/v2/[MYJ,YSU]/wrfout_d04_2018.zarr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">5</td>
+      <td style="text-align: left">Rhine-Ruhr</td>
+      <td style="text-align: left">1km</td>
+      <td style="text-align: left">121x131</td>
+      <td style="text-align: left">90m</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">/v2/[MYJ,YSU]/wrfout_d05_2018.zarr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">6</td>
+      <td style="text-align: left">Nuremberg</td>
+      <td style="text-align: left">1km</td>
+      <td style="text-align: left">121x131</td>
+      <td style="text-align: left">90m</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">/v2/[MYJ,YSU]/wrfout_d06_2018.zarr</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">7</td>
+      <td style="text-align: left">Munich</td>
+      <td style="text-align: left">1km</td>
+      <td style="text-align: left">121x131</td>
+      <td style="text-align: left">90m</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">/v2/[MYJ,YSU]/wrfout_d07_2018.zarr</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="variables">Variables</h2>
+
+<h3 id="wrf-tracer-fields">WRF tracer fields</h3>
+
+<p>The <code class="language-plaintext highlighter-rouge">BCK</code> fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
+The <code class="language-plaintext highlighter-rouge">VPRM</code> fields are offset by 407 ppm.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Variable in Swift dataset</th>
+      <th style="text-align: left">Species</th>
+      <th style="text-align: left">Emiss. type</th>
+      <th style="text-align: left">Inventory</th>
+      <th style="text-align: left">Source type</th>
+      <th style="text-align: left">Sectors</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">CO2_TRAFFIC</td>
+      <td style="text-align: left">CO<sub>2</sub></td>
+      <td style="text-align: left">fossil</td>
+      <td style="text-align: left">TNO</td>
+      <td style="text-align: left">area, point</td>
+      <td style="text-align: left">F1, F2, F3, F4, G, H, I</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO2_AREA</td>
+      <td style="text-align: left">CO<sub>2</sub></td>
+      <td style="text-align: left">fossil</td>
+      <td style="text-align: left">TNO</td>
+      <td style="text-align: left">area</td>
+      <td style="text-align: left">all except TRAFFIC</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO2_POINT</td>
+      <td style="text-align: left">CO<sub>2</sub></td>
+      <td style="text-align: left">fossil</td>
+      <td style="text-align: left">TNO</td>
+      <td style="text-align: left">point</td>
+      <td style="text-align: left">all except TRAFFIC</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO2_BF</td>
+      <td style="text-align: left">CO<sub>2</sub></td>
+      <td style="text-align: left">bio</td>
+      <td style="text-align: left">TNO</td>
+      <td style="text-align: left">area, point</td>
+      <td style="text-align: left">all</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO2_VPRM (+407 ppm)</td>
+      <td style="text-align: left">CO<sub>2</sub></td>
+      <td style="text-align: left">bio</td>
+      <td style="text-align: left">VPRM</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left">-</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO2_VPRM_V2 (+407 ppm)</td>
+      <td style="text-align: left">CO<sub>2</sub></td>
+      <td style="text-align: left">bio</td>
+      <td style="text-align: left">VPRM</td>
+      <td style="text-align: left">-</td>
+      <td style="text-align: left">-</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO2_BCK</td>
+      <td style="text-align: left">CO<sub>2</sub></td>
+      <td style="text-align: left">bio, fossil</td>
+      <td style="text-align: left">CAMS conc.</td>
+      <td style="text-align: left">all</td>
+      <td style="text-align: left">all</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO_ANT</td>
+      <td style="text-align: left">CO</td>
+      <td style="text-align: left">bio, fossil</td>
+      <td style="text-align: left">TNO</td>
+      <td style="text-align: left">area, point</td>
+      <td style="text-align: left">all</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">CO_BCK</td>
+      <td style="text-align: left">CO</td>
+      <td style="text-align: left">bio, fossil</td>
+      <td style="text-align: left">CAMS conc.</td>
+      <td style="text-align: left">all</td>
+      <td style="text-align: left">all</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="computed-variables">Computed variables</h3>
+
+<p>The following variables are computed from some of the above WRF output fields.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Display Name</th>
+      <th style="text-align: left">Variable in Swift dataset</th>
+      <th style="text-align: left">Calculation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Anthropogenic CO2</td>
+      <td style="text-align: left">CO2_ANTHRO</td>
+      <td style="text-align: left">CO2_TRAFFIC + CO2_AREA + CO2_POINT + CO2_BF</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Total CO2</td>
+      <td style="text-align: left">CO2_TOTAL</td>
+      <td style="text-align: left">CO2_ANTHRO + CO2_BCK + CO2_VPRM - 407.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Total CO2 (Bio v2)</td>
+      <td style="text-align: left">CO2_TOTAL_V2</td>
+      <td style="text-align: left">CO2_ANTHRO + CO2_BCK + CO2_VPRM_V2 - 407.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Total CO</td>
+      <td style="text-align: left">CO_TOTAL</td>
+      <td style="text-align: left">CO_ANT + CO_BCK</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Wind Speed</td>
+      <td style="text-align: left">wind_speed</td>
+      <td style="text-align: left"><a href="https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html">metpy.calc.wind_speed</a>(<a href="https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216">wind_speed_north, wind_speed_east</a>)</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="computational-structure">Computational structure</h3>
+
+<p>In order to minimize deviations from real meteorological conditions, WRF was reinitialized from ERA5 data every 7 days.</p>
+
+
+      <footer class="site-footer">
+        
+          <span class="site-footer-owner"><a href="https://github.com/ATMO-IUP-UHEI/macro-2018">macro-2018</a> is maintained by <a href="https://github.com/ATMO-IUP-UHEI">ATMO-IUP-UHEI</a>.</span>
+        
+        <span class="site-footer-credits">This page was built by Lukas Pilz and generated by <a href="https://pages.github.com">GitHub Pages</a>.</span>
+      </footer>
+    </main>
+
+    <script>
+      function toggleSidebar() {
+        var sidebar = document.getElementById('sidebar');
+        if (sidebar.style.display === 'block') {
+          sidebar.style.display = 'none';
+        } else {
+          sidebar.style.display = 'block';
+        }
+      }
+    </script>
+  </body>
+</html>
