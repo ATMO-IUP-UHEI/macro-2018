@@ -65,7 +65,7 @@ class BasePlot {
     if (this.isPlaying) {
       clearInterval(this.playInterval);
       playButton.classList = [];
-      playButton.classList.add("fa", "fa-plus");
+      playButton.classList.add("fa", "fa-play");
       this.currentIndex = parseInt(timeSlider.value);
       timeSlider.step = 24; // restore step after stopping playback
     } else {
