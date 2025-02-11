@@ -202,7 +202,7 @@ class PlotV2 extends BasePlot {
 
     } catch (error) {
       if (error.message.includes("index out of bounds")) {
-        alert("Could not find data for the selected time. Maximum available time is " + timesArray[timesArray.length -1]);
+        alert("Could not find data for the selected time. Maximum available time is " + this.timesArray[this.timesArray.length -1]);
         if (isPlaying) {
           togglePlay();
         }
