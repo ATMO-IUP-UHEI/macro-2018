@@ -162,7 +162,6 @@ class PlotV2 extends BasePlot {
       this.preloadNextDayData(time, z);
 
       // Fetch view, _min, and _max concurrently.
-      console.log(time, z);
       const [view, _min, _max] = await Promise.all([
         zarr.get(this.arr, [time, z, null, null]),
         zarr.get(this.min, [Math.floor(time / 24), z]),
@@ -202,9 +201,16 @@ class PlotV2 extends BasePlot {
       Plotly.update(this.dom.plotDiv, newTrace, newLayout);
 
     } catch (error) {
-      console.error("Error plotting data:", error);
-      if (error.message.includes("index out of bounds") && this.isPlaying) {
-        this.togglePlay();
+      if (error.message.includes("index out of bounds")) {
+        alert("Could not find data for the selected time. Maximum available time is " + this.timesArray[this.timesArray.length -1]);
+        if (this.isPlaying) {
+          togglePlay();
+        }
+        this.currentIndex = this.timesArray.length - 1;
+        this.dom.timeSlider.value = this.currentIndex;
+        this.plotData(this.currentIndex, this.currentZVal);
+      } else {
+        console.error("Error plotting data:", error);
       }
     }
   }
