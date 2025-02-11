@@ -203,9 +203,12 @@ class PlotV2 extends BasePlot {
     } catch (error) {
       if (error.message.includes("index out of bounds")) {
         alert("Could not find data for the selected time. Maximum available time is " + this.timesArray[this.timesArray.length -1]);
-        if (isPlaying) {
+        if (this.isPlaying) {
           togglePlay();
         }
+        this.currentIndex = this.timesArray.length - 1;
+        this.dom.timeSlider.value = this.currentIndex;
+        this.plotData(this.currentIndex, this.currentZVal);
       } else {
         console.error("Error plotting data:", error);
       }
