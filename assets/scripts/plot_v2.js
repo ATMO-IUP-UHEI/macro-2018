@@ -55,7 +55,6 @@ class PlotV2 extends BasePlot {
         this.currentVariable, this.currentBLScheme, this.currentDomain, this.statsMap[this.currentVariable] || "max"
       ),
     ]);
-    await this.fetchTimes();
   }
 
   async fetchTimes() {

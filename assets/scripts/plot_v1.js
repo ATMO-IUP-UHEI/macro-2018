@@ -25,13 +25,10 @@ class PlotV1 extends BasePlot {
 
   async initialFetch() {
     this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, this.currentIndex);
-    await this.fetchTimes();
   }
 
   async fetchTimes() {
-    const timesStore = new zarr.FetchStore(
-      "https://swift.dkrz.de/v1/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/v1/wrfout_d01_2018.zarr/Times/"
-    );
+    const timesStore = new zarr.FetchStore(this.getUrl(domain, variable, "Times/"));
     this.times = await zarr.open(timesStore, { kind: "array" });
     const timevalues = await zarr.get(this.times, [null]);
     this.timesArray = [];
