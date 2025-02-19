@@ -101,11 +101,11 @@
 
 This dataset contains one year of CO<sub>2</sub> and CO enhancement fields for 5 metropolitan regions in Germany (Rhine-Neckar, Rhine-Ruhr, Berlin, Nuremberg, Munich) at 1km resolution.
 These domains are embedded in the Germany domain at 5km resolution and the Europe domain at 15km resolution.
+There are two simulations available using two different WRF boundary layer schemes: MYJ (Mellor-Yamada-Janjic) [Yanjic, 2002] and YSU (Yonsei University) [[Hong, 2006]](https://doi.org/10.1175/MWR3199.1).
 
 - Contributors: <a class="enc" href="znvygb:yhxnf.cvym@vhc.hav-urvqryoret.qr">Lukas Pilz</a>, <a class="enc" href="znvygb:fnanz.ineqnt@hav-urvqryoret.qr">Sanam Vardag</a> ([GHG Simulation Group](https://www.iup.uni-heidelberg.de/de/forschung/atmosphaere/simulation-von-treibhausgasen-in-der-atmosphaere-vardag-gruppe), Institute of Environmental Physics, Heidelberg University)
 - Time period: 1.1.2018 - 31.12.2018
     - reinitialization every 7 days from ERA5 meteorology (12 hours spin up)
-- Two different boundary layer schemes available: MYJ, YSU
 
 ## Access/License
 
@@ -121,6 +121,12 @@ High resolution emission data as input for the model was prepared by TNO, the Ne
 
 ## References
 
+```
+Janjic, Z. I., 2002: Nonsingular Implementation of the Mellor–Yamada Level 2.5 Scheme in the NCEP Meso model, NCEP Office Note, No. 437, 61 pp.
+```
+```
+Hong, S., Y. Noh, and J. Dudhia, 2006: A New Vertical Diffusion Package with an Explicit Treatment of Entrainment Processes. Mon. Wea. Rev., 134, 2318–2341, https://doi.org/10.1175/MWR3199.1.
+```
 ```
 Breuer, H. (2021). CORINE dataset for WRF-NoahMP model (v4.3, v4.2) [Data set]. Zenodo. https://doi.org/10.5281/zenodo.4432128  
 ```
