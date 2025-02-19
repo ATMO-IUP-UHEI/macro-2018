@@ -38,12 +38,12 @@ class PlotV2 extends BasePlot {
 
   async fetchVariableData(variable, blscheme, domain) {
     // In v2 we always use the same URL pattern.
-    await this.fetchTimes(); // ensure timesArray is populated
     const store = new zarr.FetchStore(this.getUrl(blscheme, domain, variable) + "/");
     return await zarr.open(store, { kind: "array" });
   }
 
   async initialFetch() {
+    await this.fetchTimes();
     [this.arr, this.min, this.max] = await Promise.all([
       this.fetchVariableData(
         this.currentVariable, this.currentBLScheme, this.currentDomain
@@ -127,7 +127,12 @@ class PlotV2 extends BasePlot {
   }
 
   async updatePlot() {
-    // When variable, domain, or BLScheme changes, re-fetch data and update the plot.
+    let blscheme_changed = this.dom.blschemeDropdown.value !== this.currentBLScheme;
+    let domain_changed = this.dom.domainDropdown.value !== this.currentDomain;
+    if (blscheme_changed || domain_changed) {
+      await this.fetchTimes();
+    }
+
     this.currentBLScheme = this.dom.blschemeDropdown.value;
     this.currentVariable = this.dom.variableDropdown.value;
     this.currentDomain = this.dom.domainDropdown.value;
