@@ -5,14 +5,14 @@
       <div id="dropdown-controls">
         <div id="blscheme-container">
           <label for="blschemeDropdown">Boundary Layer scheme:</label>
-          <select id="blschemeDropdown">
+          <select id="blschemeDropdown" autocomplete="off">
             <option title="Mellor-Yamada-Janjic" value="MYJ">MYJ</option>
             <option title="Yonsei University" value="YSU">YSU</option>
           </select>
         </div>
         <div id="domain-container">
           <label for="domainDropdown">Domain:</label>
-          <select id="domainDropdown">
+          <select id="domainDropdown" autocomplete="off">
             <option value="1">Europe</option>
             <option value="2">Germany</option>
             <option value="3">Rhine-Neckar</option>
@@ -24,7 +24,7 @@
         </div>
         <div id="variable-container">
           <label for="variableDropdown">Variable:</label>
-          <select id="variableDropdown">
+          <select id="variableDropdown" autocomplete="off">
             <option value="CO2_TOTAL">Total CO2*</option>
             <option value="CO2_TOTAL_V2">Total CO2 (Bio v2)*</option>
             <option value="CO2_ANTHRO">Anthropogenic CO2*</option>
