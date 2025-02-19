@@ -155,13 +155,18 @@ class PlotV2 extends BasePlot {
     this.plotData(this.currentIndex, this.currentZVal);
   }
 
+  makeColorbarSymmetric(min, max) {
+    const absMax = Math.max(Math.abs(407. - min), Math.abs(max - 407.));
+    return [407. - absMax, 407. + absMax];
+  }
+
   async plotData(time, z) {
     try {
       // Preload next day data if conditions are met.
       this.preloadNextDayData(time, z);
 
       // Fetch view, _min, and _max concurrently.
-      const [view, _min, _max] = await Promise.all([
+      let [view, _min, _max] = await Promise.all([
         zarr.get(this.arr, [time, z, null, null]),
         zarr.get(this.min, [Math.floor(time / 24), z]),
         zarr.get(this.max, [Math.floor(time / 24), z])
@@ -188,6 +193,9 @@ class PlotV2 extends BasePlot {
       };
 
       if (time % 24 === 0) {
+        if (this.getColorscale(this.currentVariable).includes("RdBu")) {
+          [_min, _max] = this.makeColorbarSymmetric(_min, _max);
+        }
         newTrace.zmin = _min;
         newTrace.zmax = _max;
       }
