@@ -5,7 +5,7 @@
       <div id="dropdown-controls">
         <div id="domain-container">
           <label for="domainDropdown">Domain:</label>
-          <select id="domainDropdown">
+          <select id="domainDropdown" autocomplete="off">
             <option value="1">Europe</option>
             <option value="2">Germany</option>
             <option value="3">Rhine-Neckar</option>
@@ -17,7 +17,7 @@
         </div>
         <div id="variable-container">
           <label for="variableDropdown">Variable:</label>
-          <select id="variableDropdown">
+          <select id="variableDropdown" autocomplete="off">
             <option value="CO2_ANT">CO2 Area Sources</option>
             <option value="CO2_TST">CO2 Point Sources</option>
             <option value="CO2_TRAFFIC">CO2 Traffic</option>
