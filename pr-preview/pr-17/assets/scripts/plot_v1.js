@@ -48,7 +48,7 @@ class PlotV1 extends BasePlot {
     this.dom.timeSlider.addEventListener("input", (event) => {
       this.assureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value), true).then(
         () => {
-          const timeValue = this.timesArray[parseInt(event.target.value)];
+          const timeValue = this.timesArray[this.fixTimeVariable(this.currentDomain, parseInt(event.target.value))];
           const layoutUpdate = { title: { text: `${this.currentVariable} at ${timeValue}`, y: 0.9 } };
           Plotly.relayout(this.dom.plotDiv, layoutUpdate);
         }
