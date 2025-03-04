@@ -190,7 +190,7 @@ class BasePlot {
   addListeners() {
     this.dom.timeSlider.addEventListener("change", (event) => {
       this.currentIndex = parseInt(event.target.value);
-      this.plotData(this.currentIndex, parseInt(this.dom.zslider.value));
+      this.plotData(this.currentIndex, this.currentZVal);
     });
     this.dom.timeSlider.addEventListener("input", (event) => {
       const timeValue = this.timesArray[parseInt(event.target.value)];
@@ -199,7 +199,8 @@ class BasePlot {
     });
     this.dom.zslider.addEventListener("change", (event) => {
       this.dom.zlabel.innerHTML = "Z Slice: " + event.target.value;
-      this.plotData(this.currentIndex, parseInt(event.target.value));
+      this.currentZVal = parseInt(event.target.value || 0);
+      this.plotData(this.currentIndex, this.currentZVal);
     });
     this.dom.variableDropdown.addEventListener("change", () => this.updatePlot());
     this.dom.domainDropdown.addEventListener("change", () => this.updatePlot());
