@@ -1,5 +1,16 @@
 import { BasePlot, zarr } from "./base_plot.js";
 
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    return new Promise((resolve, reject) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, args).then(resolve).catch(reject);
+      }, wait);
+    });
+  };
+}
 
 class PlotV1 extends BasePlot {
   constructor() {
@@ -8,6 +19,7 @@ class PlotV1 extends BasePlot {
     this.currentVariable = "CO2_ANT";
     this.currentTimesURL = "";
     this.dom2IndexChange = 2160;
+    this.debouncedAssureCorrectDataIsLoaded = debounce(this.assureCorrectDataIsLoaded.bind(this), 200);
   }
 
   async assureCorrectDataIsLoaded(domain, newTime, scrubbing = false) {
@@ -38,7 +50,7 @@ class PlotV1 extends BasePlot {
   addListeners() {
     super.addListeners();
     this.dom.timeSlider.addEventListener("change", (event) => {
-      this.assureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value)).then(
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value)).then(
         () => {
           this.currentIndex = parseInt(event.target.value);
           this.plotData(this.currentIndex, parseInt(this.dom.zslider.value));
@@ -46,7 +58,7 @@ class PlotV1 extends BasePlot {
       );
     });
     this.dom.timeSlider.addEventListener("input", (event) => {
-      this.assureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value), true).then(
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value), true).then(
         () => {
           const timeValue = this.timesArray[this.fixTimeVariable(this.currentDomain, parseInt(event.target.value))];
           const layoutUpdate = { title: { text: `${this.currentVariable} at ${timeValue}`, y: 0.9 } };
@@ -55,22 +67,22 @@ class PlotV1 extends BasePlot {
       );
     });
     this.dom.incrementTimeButton.addEventListener("click", () => {
-      this.assureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 24).then(
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 24).then(
         () => { this.incrementTime(); }
       );
     });
     this.dom.decrementTimeButton.addEventListener("click", () => {
-      this.assureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 24).then(
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 24).then(
         () => { this.decrementTime(); }
       );
     });
     this.dom.stepTimeForwardButton.addEventListener("click", () => {
-      this.assureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 1).then(
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 1).then(
         () => { this.stepForward(); }
       );
     });
     this.dom.stepTimeBackButton.addEventListener("click", () => {
-      this.assureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 1).then(
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 1).then(
         () => { this.stepBackward(); }
       );
     });
