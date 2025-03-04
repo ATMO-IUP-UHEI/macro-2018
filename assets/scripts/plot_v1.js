@@ -1,15 +1,95 @@
 import { BasePlot, zarr } from "./base_plot.js";
 
+function debounce(func, wait) {
+  let timeout;
+  return function(...args) {
+    return new Promise((resolve, reject) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, args).then(resolve).catch(reject);
+      }, wait);
+    });
+  };
+}
 
 class PlotV1 extends BasePlot {
   constructor() {
     super();
     // Set version-1–specific defaults
     this.currentVariable = "CO2_ANT";
+    this.currentTimesURL = "";
+    this.dom2IndexChange = 2160;
+    this.debouncedAssureCorrectDataIsLoaded = debounce(this.assureCorrectDataIsLoaded.bind(this), 200);
+  }
+
+  async assureCorrectDataIsLoaded(domain, newTime, scrubbing = false) {
+    if (this.currentDomain === "2") {
+      if (newTime >= this.dom2IndexChange) {
+        if (!this.currentTimesURL.includes("from_04")) {
+          if (scrubbing) {
+            await this.fetchTimes();
+          }
+          else {
+            this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, newTime);
+          }
+        }
+      }
+      else {
+        if (this.currentTimesURL.includes("from_04")) {
+          if (scrubbing) {
+            await this.fetchTimes();
+          }
+          else {
+            this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, newTime);
+          }
+        }
+      }
+    }
+  }
+
+  addListeners() {
+    super.addListeners();
+    this.dom.timeSlider.addEventListener("change", (event) => {
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value)).then(
+        () => {
+          this.currentIndex = parseInt(event.target.value);
+          this.plotData(this.currentIndex, parseInt(this.dom.zslider.value));
+        }
+      );
+    });
+    this.dom.timeSlider.addEventListener("input", (event) => {
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value), true).then(
+        () => {
+          const timeValue = this.timesArray[this.fixTimeVariable(this.currentDomain, parseInt(event.target.value))];
+          const layoutUpdate = { title: { text: `${this.currentVariable} at ${timeValue}`, y: 0.9 } };
+          Plotly.relayout(this.dom.plotDiv, layoutUpdate);
+        }
+      );
+    });
+    this.dom.incrementTimeButton.addEventListener("click", () => {
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 24).then(
+        () => { this.incrementTime(); }
+      );
+    });
+    this.dom.decrementTimeButton.addEventListener("click", () => {
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 24).then(
+        () => { this.decrementTime(); }
+      );
+    });
+    this.dom.stepTimeForwardButton.addEventListener("click", () => {
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 1).then(
+        () => { this.stepForward(); }
+      );
+    });
+    this.dom.stepTimeBackButton.addEventListener("click", () => {
+      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 1).then(
+        () => { this.stepBackward(); }
+      );
+    });
   }
 
   getUrl(domain, path, time) {
-    if (domain === "2" && time >= 2160) {
+    if (domain === "2" && time >= this.dom2IndexChange) {
       return `${this.BASE_URL}/v1/wrfout_d0${domain}_2018_from_04.zarr/${path}/`;
     } else {
       return `${this.BASE_URL}/v1/wrfout_d0${domain}_2018.zarr/${path}/`;
@@ -28,7 +108,8 @@ class PlotV1 extends BasePlot {
   }
 
   async fetchTimes() {
-    const timesStore = new zarr.FetchStore(this.getUrl(this.currentDomain, "Times", 0));
+    this.currentTimesURL = this.getUrl(this.currentDomain, "Times", this.currentIndex)
+    const timesStore = new zarr.FetchStore(this.currentTimesURL);
     this.times = await zarr.open(timesStore, { kind: "array" });
     const timevalues = await zarr.get(this.times, [null]);
     this.timesArray = [];
@@ -38,8 +119,8 @@ class PlotV1 extends BasePlot {
   }
 
   fixTimeVariable(domain, time) {
-    if (domain === "2" && time >= 2160) {
-      return time - 2160;
+    if (domain === "2" && time >= this.dom2IndexChange) {
+      return time - this.dom2IndexChange;
     } else {
       return time;
     }
@@ -76,16 +157,17 @@ class PlotV1 extends BasePlot {
       height: 470,
     };
     Plotly.newPlot(this.dom.plotDiv, initialData, initialLayout);
-    this.plotData(this.fixTimeVariable(this.currentDomain, this.currentIndex), this.currentZVal);
+    this.plotData(this.currentIndex, this.currentZVal);
   }
 
   async updatePlot() {
     // When variable or domain changes, fetch new data and replot.
     this.currentVariable = this.dom.variableDropdown.value;
     this.currentDomain = this.dom.domainDropdown.value;
+    this.currentIndex = parseInt(this.dom.timeSlider.value);
     this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, this.currentIndex);
     this.currentZVal = parseInt(this.dom.zslider.value);
-    this.plotData(this.fixTimeVariable(this.currentDomain, this.currentIndex), this.currentZVal);
+    this.plotData(this.currentIndex, this.currentZVal);
   }
 
   setPlaybackInterval(speed) {
@@ -101,11 +183,12 @@ class PlotV1 extends BasePlot {
       }
       // Use the current z–slider value (or 0 if missing)
       const zVal = parseInt(this.dom.zslider.value || 0);
-      this.plotData(this.fixTimeVariable(this.currentDomain, this.currentIndex), zVal);
+      this.plotData(this.currentIndex, zVal);
     }, speed);
   }
 
   async plotData(time, z) {
+    time = this.fixTimeVariable(this.currentDomain, time);
     try {
       // Preload next 24 hours if the time meets the condition.
       this.preloadNextDayData(time, z);
