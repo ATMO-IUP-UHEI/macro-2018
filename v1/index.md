@@ -77,7 +77,7 @@
 </div>
 
 <script type="module" src="{{ '/assets/scripts/plot_v1.js' | relative_url }}"></script>
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="https://cdn.plot.ly/plotly-3.0.1.min.js"></script>
 <script src="{{ '/assets/scripts/decoder.js' | relative_url}}" defer></script>
 
 
