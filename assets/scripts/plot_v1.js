@@ -28,7 +28,7 @@ class PlotV1 extends BasePlot {
   }
 
   async fetchTimes() {
-    const timesStore = new zarr.FetchStore(this.getUrl(domain, variable, "Times/"));
+    const timesStore = new zarr.FetchStore(this.getUrl(this.currentDomain, "Times", 0));
     this.times = await zarr.open(timesStore, { kind: "array" });
     const timevalues = await zarr.get(this.times, [null]);
     this.timesArray = [];
