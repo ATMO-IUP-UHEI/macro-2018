@@ -3,8 +3,12 @@ import { BasePlot, zarr } from "./base_plot.js";
 function debounce(func, wait) {
   let timeout;
   return function(...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
+    return new Promise((resolve, reject) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        func.apply(this, args).then(resolve).catch(reject);
+      }, wait);
+    });
   };
 }
 
