@@ -2,7 +2,7 @@ import { BasePlot, zarr } from "./base_plot.js";
 
 function debounce(func, wait) {
   let timeout;
-  return function(...args) {
+  return function (...args) {
     return new Promise((resolve, reject) => {
       clearTimeout(timeout);
       timeout = setTimeout(() => {
@@ -17,75 +17,54 @@ class PlotV1 extends BasePlot {
     super();
     // Set version-1–specific defaults
     this.currentVariable = "CO2_ANT";
-    this.currentTimesURL = "";
+    this.currentDataURL = "";
     this.dom2IndexChange = 2160;
-    this.debouncedAssureCorrectDataIsLoaded = debounce(this.assureCorrectDataIsLoaded.bind(this), 200);
+    this.debouncedAssureCorrectDataIsLoaded = debounce(this.assureCorrectDataIsLoaded.bind(this), 50);
   }
 
-  async assureCorrectDataIsLoaded(domain, newTime, scrubbing = false) {
+  async assureCorrectDataIsLoaded(newTime) {
     if (this.currentDomain === "2") {
-      if (newTime >= this.dom2IndexChange) {
-        if (!this.currentTimesURL.includes("from_04")) {
-          if (scrubbing) {
-            await this.fetchTimes();
-          }
-          else {
-            this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, newTime);
-          }
-        }
-      }
-      else {
-        if (this.currentTimesURL.includes("from_04")) {
-          if (scrubbing) {
-            await this.fetchTimes();
-          }
-          else {
-            this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, newTime);
-          }
-        }
+      const needsFetch = (newTime >= this.dom2IndexChange && !this.currentDataURL.includes("from_04")) ||
+                         (newTime < this.dom2IndexChange && this.currentDataURL.includes("from_04"));
+      if (needsFetch) {
+        this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, newTime);
       }
     }
   }
 
-  addListeners() {
-    super.addListeners();
-    this.dom.timeSlider.addEventListener("change", (event) => {
-      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value)).then(
-        () => {
-          this.currentIndex = parseInt(event.target.value);
-          this.plotData(this.currentIndex, parseInt(this.dom.zslider.value));
-        }
-      );
-    });
-    this.dom.timeSlider.addEventListener("input", (event) => {
-      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, parseInt(event.target.value), true).then(
-        () => {
-          const timeValue = this.timesArray[this.fixTimeVariable(this.currentDomain, parseInt(event.target.value))];
-          const layoutUpdate = { title: { text: `${this.currentVariable} at ${timeValue}`, y: 0.9 } };
-          Plotly.relayout(this.dom.plotDiv, layoutUpdate);
-        }
-      );
-    });
-    this.dom.incrementTimeButton.addEventListener("click", () => {
-      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 24).then(
-        () => { this.incrementTime(); }
-      );
-    });
-    this.dom.decrementTimeButton.addEventListener("click", () => {
-      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 24).then(
-        () => { this.decrementTime(); }
-      );
-    });
-    this.dom.stepTimeForwardButton.addEventListener("click", () => {
-      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex + 1).then(
-        () => { this.stepForward(); }
-      );
-    });
-    this.dom.stepTimeBackButton.addEventListener("click", () => {
-      this.debouncedAssureCorrectDataIsLoaded(this.currentDomain, this.currentIndex - 1).then(
-        () => { this.stepBackward(); }
-      );
-    });
+  onTimeSliderChangev1(event) {
+    this.currentIndex = parseInt(event.target.value);
+    this.plotData(this.currentIndex, this.currentZVal);
+  }
+
+  onTimeSliderChange(event) {
+    this.debouncedAssureCorrectDataIsLoaded(parseInt(event.target.value)).then(
+      () => {this.onTimeSliderChangev1(event);}
+    );
+  }
+
+  incrementTime() {
+    this.debouncedAssureCorrectDataIsLoaded(this.currentIndex + 24).then(
+      () => { super.incrementTime(); }
+    );
+  }
+
+  decrementTime() {
+    this.debouncedAssureCorrectDataIsLoaded(this.currentIndex - 24).then(
+      () => { super.decrementTime(); }
+    );
+  }
+  
+  stepForward() {
+    this.debouncedAssureCorrectDataIsLoaded(this.currentIndex + 1).then(
+      () => { super.stepForward(); }
+    );
+  }
+
+  stepBackward() {
+    this.debouncedAssureCorrectDataIsLoaded(this.currentIndex - 1).then(
+      () => { super.stepBackward(); }
+    );
   }
 
   getUrl(domain, path, time) {
@@ -99,7 +78,8 @@ class PlotV1 extends BasePlot {
   // In v1 the URL depends on the domain and time.
   async fetchVariableData(variable, domain, time) {
     await this.fetchTimes(); // ensure timesArray is populated
-    const store = new zarr.FetchStore(this.getUrl(domain, variable, time));
+    this.currentDataURL = this.getUrl(domain, variable, time);
+    const store = new zarr.FetchStore(this.currentDataURL);
     return await zarr.open(store, { kind: "array" });
   }
 
@@ -108,8 +88,8 @@ class PlotV1 extends BasePlot {
   }
 
   async fetchTimes() {
-    this.currentTimesURL = this.getUrl(this.currentDomain, "Times", this.currentIndex)
-    const timesStore = new zarr.FetchStore(this.currentTimesURL);
+    const domain = this.currentDomain === "2" ? "1" : this.currentDomain;
+    const timesStore = new zarr.FetchStore(this.getUrl(domain, "Times", this.currentIndex));
     this.times = await zarr.open(timesStore, { kind: "array" });
     const timevalues = await zarr.get(this.times, [null]);
     this.timesArray = [];
@@ -170,31 +150,22 @@ class PlotV1 extends BasePlot {
     this.plotData(this.currentIndex, this.currentZVal);
   }
 
-  setPlaybackInterval(speed) {
-    clearInterval(this.playInterval);
-    const timeSlider = this.dom.timeSlider;
-    this.playInterval = setInterval(() => {
-      let currentValue = parseInt(timeSlider.value);
-      this.currentIndex = currentValue;
-      if (currentValue < parseInt(timeSlider.max)) {
-        timeSlider.value = currentValue + 1;
-      } else {
-        timeSlider.value = timeSlider.min;
-      }
-      // Use the current z–slider value (or 0 if missing)
-      const zVal = parseInt(this.dom.zslider.value || 0);
-      this.plotData(this.currentIndex, zVal);
-    }, speed);
-  }
-
   async plotData(time, z) {
+    if (this.currentDomain === "2") {
+      const needsFetch = (time >= this.dom2IndexChange && !this.currentDataURL.includes("from_04")) ||
+                         (time < this.dom2IndexChange && this.currentDataURL.includes("from_04"));
+      if (needsFetch) {
+        this.arr = await this.fetchVariableData(this.currentVariable, this.currentDomain, time);
+      }
+    }
+    const requestedTime = time;
     time = this.fixTimeVariable(this.currentDomain, time);
     try {
       // Preload next 24 hours if the time meets the condition.
       this.preloadNextDayData(time, z);
 
       const view = await zarr.get(this.arr, [time, z, null, null]);
-      const timeValue = this.timesArray[time];
+      const timeValue = this.timesArray[requestedTime];
 
       if (!view || !view.data || view.data.length === 0) {
         throw new Error("Empty data");

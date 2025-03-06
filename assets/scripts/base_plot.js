@@ -54,7 +54,6 @@ class BasePlot {
         timeSlider.value = timeSlider.min;
       }
       // Use the current z–slider value (or 0 if missing)
-      this.currentZVal = parseInt(this.dom.zslider.value || 0);
       this.plotData(this.currentIndex, this.currentZVal);
     }, speed);
   }
@@ -187,21 +186,27 @@ class BasePlot {
     this.dom.plotDiv = document.getElementById("myDiv");
   }
 
-  addListeners() {
-    this.dom.timeSlider.addEventListener("change", (event) => {
+  onTimeSliderChange(event) {
       this.currentIndex = parseInt(event.target.value);
       this.plotData(this.currentIndex, this.currentZVal);
-    });
-    this.dom.timeSlider.addEventListener("input", (event) => {
+  }
+
+  onTimeSliderInput(event) {
       const timeValue = this.timesArray[parseInt(event.target.value)];
       const layoutUpdate = { title: { text: `${this.currentVariable} at ${timeValue}`, y: 0.9 } };
       Plotly.relayout(this.dom.plotDiv, layoutUpdate);
-    });
-    this.dom.zslider.addEventListener("change", (event) => {
+  }
+
+  onZSliderChange(event) {
       this.dom.zlabel.innerHTML = "Z Slice: " + event.target.value;
       this.currentZVal = parseInt(event.target.value || 0);
       this.plotData(this.currentIndex, this.currentZVal);
-    });
+  }
+
+  addListeners() {
+    this.dom.timeSlider.addEventListener("change", (event) => this.onTimeSliderChange(event));
+    this.dom.timeSlider.addEventListener("input", (event) => this.onTimeSliderInput(event));
+    this.dom.zslider.addEventListener("change", (event) => this.onZSliderChange(event));
     this.dom.variableDropdown.addEventListener("change", () => this.updatePlot());
     this.dom.domainDropdown.addEventListener("change", () => this.updatePlot());
     this.dom.increaseSpeedButton.addEventListener("click", (event) => this.increaseSpeed(event));
