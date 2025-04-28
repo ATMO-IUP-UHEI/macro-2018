@@ -60,7 +60,12 @@
         </div>
       </div>
     </div>
-    <div id="myDiv"></div>
+    <div id="plotContainer">
+      <div id="spinner" style="display: none;">
+        <div class="spinner"></div>
+      </div>
+      <div id="myDiv"></div>
+    </div>
   </div>
   <div id="timeWidget">
     <input type="range" id="timeSlider" min="0" max="8760" value="0" step="24" list="tickmarks">
@@ -99,7 +104,7 @@
 
 ## General
 
-This dataset contains one year of CO<sub>2</sub> and CO enhancement fields for 5 metropolitan regions in Germany (Rhine-Neckar, Rhine-Ruhr, Berlin, Nuremberg, Munich) at 1km resolution.
+This dataset contains one year of 1km resolved CO<sub>2</sub> and CO enhancement fields as well as meteorology for 5 metropolitan regions in Germany (Rhine-Neckar, Rhine-Ruhr, Berlin, Nuremberg, Munich).
 These domains are embedded in the Germany domain at 5km resolution and the Europe domain at 15km resolution.
 There are two simulations available using two different WRF boundary layer schemes: MYJ (Mellor-Yamada-Janjic) [Yanjic, 2002] and YSU (Yonsei University) [[Hong, 2006]](https://doi.org/10.1175/MWR3199.1).
 

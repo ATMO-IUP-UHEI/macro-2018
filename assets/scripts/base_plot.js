@@ -21,6 +21,7 @@ class BasePlot {
     this.times = null;
     this.timesArray = [];
     this.dom = {}; // Will hold cached DOM elements
+    this.chunkSize = 24; // Default chunk size for time dimension
   }
 
   //////////////////////////
@@ -237,26 +238,26 @@ class BasePlot {
   }
 
   preloadNextDayData(time, z) {
-    if (this.speedToFPS(this.speed) < 10 && time % 24 === 12) {
+    if (this.speedToFPS(this.speed) < 10 && time % this.chunkSize === this.chunkSize/2) {
       // Fire-and-forget preload
-      zarr.get(this.arr, [time + 24, z, null, null]).catch((err) => {
+      zarr.get(this.arr, [time + this.chunkSize, z, null, null]).catch((err) => {
         if (!err.message.includes("index out of bounds")) {
           console.error(err);
         }
       });
-    } else if (this.speedToFPS(this.speed) >= 10 && time % 24 === 0) {
-      zarr.get(this.arr, [time + 24, z, null, null]).catch((err) => {
+    } else if (this.speedToFPS(this.speed) >= 10 && time % this.chunkSize === 0) {
+      zarr.get(this.arr, [time + this.chunkSize, z, null, null]).catch((err) => {
         if (!err.message.includes("index out of bounds")) {
           console.error(err);
         }
       });
-    } else if (this.speedToFPS(this.speed) > 15 && time % 24 === 0) {
-      zarr.get(this.arr, [time + 24, z, null, null]).catch((err) => {
+    } else if (this.speedToFPS(this.speed) > 15 && time % this.chunkSize === 0) {
+      zarr.get(this.arr, [time + this.chunkSize, z, null, null]).catch((err) => {
         if (!err.message.includes("index out of bounds")) {
           console.error(err);
         }
       });
-      zarr.get(this.arr, [time + 48, z, null, null]).catch((err) => {
+      zarr.get(this.arr, [time + this.chunkSize*2, z, null, null]).catch((err) => {
         if (!err.message.includes("index out of bounds")) {
           console.error(err);
         }

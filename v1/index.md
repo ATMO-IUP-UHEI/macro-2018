@@ -83,7 +83,7 @@
 
 ## General
 
-This dataset contains one year of CO<sub>2</sub> and CO enhancement fields for 5 metropolitan regions in Germany (Rhine-Neckar, Rhine-Ruhr, Berlin, Nuremberg, Munich) at 1km resolution.
+This dataset contains one year of 1km resolved CO<sub>2</sub> and CO enhancement fields as well as meteorology for 5 metropolitan regions in Germany (Rhine-Neckar, Rhine-Ruhr, Berlin, Nuremberg, Munich).
 These domains are embedded in the Germany domain at 5km resolution and the Europe domain at 15km resolution.
 
 - Contributors: <a class="enc" href="znvygb:yhxnf.cvym@vhc.hav-urvqryoret.qr">Lukas Pilz</a>, <a class="enc" href="znvygb:fnanz.ineqnt@hav-urvqryoret.qr">Sanam Vardag</a> ([GHG Simulation Group](https://www.iup.uni-heidelberg.de/de/forschung/atmosphaere/simulation-von-treibhausgasen-in-der-atmosphaere-vardag-gruppe), Institute of Environmental Physics, Heidelberg University)
