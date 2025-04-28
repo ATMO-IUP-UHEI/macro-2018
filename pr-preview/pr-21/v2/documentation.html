@@ -7,7 +7,7 @@
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/macro-2018/pr-preview/pr-21/assets/css/style.css?v=997dea93baddd8cedd1ac7cfe3c38031c6a233c7">
+    <link rel="stylesheet" href="/macro-2018/pr-preview/pr-21/assets/css/style.css?v=480b612fc179307f74186e4a234cb8b6380c2e4f">
     <link rel="icon" type="image/png" href="/macro-2018/pr-preview/pr-21/assets/favicons/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/macro-2018/pr-preview/pr-21/assets/favicons/favicon.svg" />
     <link rel="shortcut icon" href="/macro-2018/pr-preview/pr-21/assets/favicons/favicon.ico" sizes="48x48 32x32" />
@@ -108,6 +108,8 @@
   </li>
   <li>Topography: (res cf. below) COP DEM [M. Galkowski, personal communication]</li>
 </ul>
+
+<p>In order to minimize deviations from real meteorological conditions, WRF was reinitialized from ERA5 data every 7 days with a 12 hour spin-up.</p>
 
 <h2 id="domain-setup">Domain setup</h2>
 
@@ -322,12 +324,31 @@ The <code class="language-plaintext highlighter-rouge">VPRM</code> fields are of
       <td style="text-align: left">wind_speed</td>
       <td style="text-align: left"><a href="https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html">metpy.calc.wind_speed</a>(<a href="https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216">wind_speed_north, wind_speed_east</a>)</td>
     </tr>
+    <tr>
+      <td style="text-align: left">Wind Direction</td>
+      <td style="text-align: left">wind_direction</td>
+      <td style="text-align: left"><a href="https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_direction.html">metpy.calc.wind_direction</a>(<a href="https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216">wind_speed_north, wind_speed_east</a>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">10m Wind Speed</td>
+      <td style="text-align: left">wind_speed_10</td>
+      <td style="text-align: left"><a href="https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html">metpy.calc.wind_speed</a>(<a href="https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L219-L231">wind_speed_north_10, wind_speed_east_10</a>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">10m Wind Direction</td>
+      <td style="text-align: left">wind_direction_10</td>
+      <td style="text-align: left"><a href="https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_direction.html">metpy.calc.wind_direction</a>(<a href="https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L219-L231">wind_speed_north_10, wind_speed_east_10</a>)</td>
+    </tr>
   </tbody>
 </table>
 
-<h3 id="computational-structure">Computational structure</h3>
-
-<p>In order to minimize deviations from real meteorological conditions, WRF was reinitialized from ERA5 data every 7 days.</p>
+<p>Every file also contains pre-computed statistics information about select variables in the <code class="language-plaintext highlighter-rouge">stats</code> group.
+The variables which have statistics information available are:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CO2_AREA, CO2_POINT, CO2_TRAFFIC, CO2_BF, CO2_BCK, CO2_VPRM, CO2_VPRM_V2, CO2_ANTHRO, CO2_TOTAL, CO2_TOTAL_V2, CO_ANT, CO_BCK, CO_TOTAL, air_pressure, wind_north, wind_north_10, wind_east, wind_east_10, wind_speed, wind_speed_10
+</code></pre></div></div>
+<p>For these, the following statistics are available on a per-day and per-height basis:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>min, max, mean, median, 0.2% quantile, 99.8% quantile, 5% quantile, 95% quantile
+</code></pre></div></div>
 
 
       <footer class="site-footer">
