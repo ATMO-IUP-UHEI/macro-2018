@@ -21,13 +21,13 @@ title: Documentation
 
 | Domain no | Name         | Resolution | Extent  | Topography resolution | Grid nudging           | Zarr file                            |
 |:----------|:-------------|:-----------|:--------|:----------------------|:-----------------------|:-------------------------------------|
-| 1         | Europe       | 15km       | 156x171 | 30s                   | 3h Q, T, U,V above PBL | `/v2/[MYJ,YSU]/wrfout_d01_2018.zarr`           |
-| 2         | Germany      | 5km        | 226x271 | 30s                   | 3h Q, T, U,V above PBL | `/v2/[MYJ,YSU]/wrfout_d02_2018.zarr` |
-| 3         | Rhine-Neckar | 1km        | 121x156 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d03_2018.zarr`           |
-| 4         | Berlin       | 1km        | 176x171 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d04_2018.zarr`           |
-| 5         | Rhine-Ruhr   | 1km        | 121x131 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d05_2018.zarr`           |
-| 6         | Nuremberg    | 1km        | 121x131 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d06_2018.zarr`           |
-| 7         | Munich       | 1km        | 121x131 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d07_2018.zarr`           |
+| 1         | Europe       | 15km       | 156x171 | 30s                   | 3h Q, T, U,V above PBL | `[MYJ,YSU]/wrfout_d01.zarr`           |
+| 2         | Germany      | 5km        | 226x271 | 30s                   | 3h Q, T, U,V above PBL | `[MYJ,YSU]/wrfout_d02.zarr` |
+| 3         | Rhine-Neckar | 1km        | 121x156 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d03.zarr`           |
+| 4         | Berlin       | 1km        | 176x171 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d04.zarr`           |
+| 5         | Rhine-Ruhr   | 1km        | 121x131 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d05.zarr`           |
+| 6         | Nuremberg    | 1km        | 121x131 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d06.zarr`           |
+| 7         | Munich       | 1km        | 121x131 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d07.zarr`           |
 
 
 ## Variables
@@ -37,7 +37,7 @@ title: Documentation
 The `BCK` fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
 The `VPRM` fields are offset by 407 ppm.
 
-| Variable in Swift dataset | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
+| Variable in dataset       | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
 |:--------------------------|:-------------------|:------------|:-----------|:---------------|:------------------------|
 | CO2_TRAFFIC               | CO<sub>2</sub>     | fossil      | TNO        | area, point    | F1, F2, F3, F4, G, H, I |
 | CO2_AREA                  | CO<sub>2</sub>     | fossil      | TNO        | area           | all except TRAFFIC      |
@@ -53,7 +53,7 @@ The `VPRM` fields are offset by 407 ppm.
 
 The following variables are computed from some of the above WRF output fields.
 
-| Display Name       | Variable in Swift dataset | Calculation                                               |
+| Display Name       | Variable in dataset       | Calculation                                               |
 |:-------------------|:--------------------------|:----------------------------------------------------------|
 | Anthropogenic CO2  | CO2_ANTHRO                | CO2_TRAFFIC + CO2_AREA + CO2_POINT + CO2_BF               |
 | Total CO2          | CO2_TOTAL                 | CO2_ANTHRO + CO2_BCK + CO2_VPRM - 407.                    |

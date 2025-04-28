@@ -44,8 +44,10 @@
         <li><a href="{{ current_version | relative_url }}/documentation.html">Documentation</a></li>
         <li>Data Access</li>
         <ul>
-          <li><a href="{{ current_version | relative_url }}/python.html">Python Access (recommended)</a></li>
+          <li><a href="{{ current_version | relative_url }}/python.html">Using Python</a></li>
+          {% if current_version contains 'v1' %}
           <li><a href="https://swiftbrowser.dkrz.de/public/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/{{ current_version }}/">HTTPS Access</a></li>
+          {% endif %}
         </ul>
       </ul>
     </div>
