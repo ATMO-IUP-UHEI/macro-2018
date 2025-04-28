@@ -3,8 +3,10 @@ import { BasePlot, zarr } from "./base_plot.js";
 class PlotV2 extends BasePlot {
   constructor() {
     super();
+    this.BASE_URL = "https://s3.eu-dkrz-1.dkrz.cloud/bb1170/public/MACRO-2018";
     // Set version-2–specific defaults
     this.currentVariable = "CO2_TOTAL";
+    this.chunkSize = 48;
     this.currentBLScheme = "MYJ"; // additional parameter for v2
     this.statsMap = {
       CO2_POINT: "q998",
@@ -23,12 +25,13 @@ class PlotV2 extends BasePlot {
 
   // Helper to build full URL in v2.
   getUrl(blscheme, domain, path) {
-    return `${this.BASE_URL}/v2/${blscheme}/wrfout_d0${domain}_2018.zarr/${path}`;
+    return `${this.BASE_URL}/${blscheme}/wrfout_d0${domain}.zarr/${path}`;
   }
 
   populateDOM() {
     super.populateDOM();
     this.dom.blschemeDropdown = document.getElementById("blschemeDropdown");
+    this.spinner = document.getElementById("spinner");
   }
 
   addListeners() {
@@ -38,8 +41,17 @@ class PlotV2 extends BasePlot {
 
   async fetchVariableData(variable, blscheme, domain) {
     // In v2 we always use the same URL pattern.
-    const store = new zarr.FetchStore(this.getUrl(blscheme, domain, variable) + "/");
-    return await zarr.open(store, { kind: "array" });
+    this.spinner.style.display = "block";
+    try {
+      const store = new zarr.FetchStore(this.getUrl(blscheme, domain, variable) + "/");
+      return await zarr.open(store, { kind: "array" });
+    } catch (error) {
+      console.error("Error fetching variable data:", error);
+      throw error;
+    }
+    finally {
+      this.spinner.style.display = "none";
+    }
   }
 
   async initialFetch() {
@@ -58,12 +70,20 @@ class PlotV2 extends BasePlot {
   }
 
   async fetchTimes() {
-    // In v2, we fetch times from the "Times/" path.
-    const timesStore = new zarr.FetchStore(this.getUrl(this.currentBLScheme, this.currentDomain, "Times/"));
-    this.times = await zarr.open(timesStore, { kind: "array" });
-    const timeValues = await zarr.get(this.times, [null]);
-    // Build timesArray (e.g. slicing off the last 6 characters)
-    this.timesArray = Array.from(timeValues.data, (val) => val.slice(0, -6));
+    this.spinner.style.display = "block";
+    try {
+      // In v2, we fetch times from the "Times/" path.
+      const timesStore = new zarr.FetchStore(this.getUrl(this.currentBLScheme, this.currentDomain, "Times/"));
+      this.times = await zarr.open(timesStore, { kind: "array" });
+      const timeValues = await zarr.get(this.times, [null]);
+      // Build timesArray (e.g. slicing off the last 6 characters)
+      this.timesArray = Array.from(timeValues.data, (val) => val.slice(0, -6));
+    } catch (error) {
+      console.error("Error fetching times:", error);
+      throw error;
+    } finally {
+      this.spinner.style.display = "none";
+    }
   }
 
   initializePlot() {
@@ -120,10 +140,19 @@ class PlotV2 extends BasePlot {
   }
 
   async fetchStatsData(variable, blscheme, domain, stat) {
-    const store = new zarr.FetchStore(
-      this.getUrl(blscheme, domain, `stats/${variable}_${stat}`) + "/"
-    );
-    return await zarr.open(store, { kind: "array" });
+    this.spinner.style.display = "block";
+    try {
+      const store = new zarr.FetchStore(
+        this.getUrl(blscheme, domain, `stats/${variable}_${stat}`) + "/"
+      );
+      return await zarr.open(store, { kind: "array" });
+    } catch (error) {
+      console.error("Error fetching variable data:", error);
+      throw error;
+    }
+    finally {
+      this.spinner.style.display = "none";
+    }
   }
 
   async updatePlot() {

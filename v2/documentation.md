@@ -17,17 +17,19 @@ title: Documentation
     - urban: (100m x 100m) Local Climate Zones [using w2w v0.5.0](https://github.com/matthiasdemuzere/w2w/tree/30bbaa12032bcbf7ccebdcb4f775f28803416c58) [[Demuzere, 2022]](https://doi.org/10.5194/essd-14-3835-2022)
 - Topography: (res cf. below) COP DEM [M. Galkowski, personal communication]
 
+In order to minimize deviations from real meteorological conditions, WRF was reinitialized from ERA5 data every 7 days with a 12 hour spin-up.
+
 ## Domain setup
 
 | Domain no | Name         | Resolution | Extent  | Topography resolution | Grid nudging           | Zarr file                            |
 |:----------|:-------------|:-----------|:--------|:----------------------|:-----------------------|:-------------------------------------|
-| 1         | Europe       | 15km       | 156x171 | 30s                   | 3h Q, T, U,V above PBL | `/v2/[MYJ,YSU]/wrfout_d01_2018.zarr`           |
-| 2         | Germany      | 5km        | 226x271 | 30s                   | 3h Q, T, U,V above PBL | `/v2/[MYJ,YSU]/wrfout_d02_2018.zarr` |
-| 3         | Rhine-Neckar | 1km        | 121x156 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d03_2018.zarr`           |
-| 4         | Berlin       | 1km        | 176x171 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d04_2018.zarr`           |
-| 5         | Rhine-Ruhr   | 1km        | 121x131 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d05_2018.zarr`           |
-| 6         | Nuremberg    | 1km        | 121x131 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d06_2018.zarr`           |
-| 7         | Munich       | 1km        | 121x131 | 90m                   | -                      | `/v2/[MYJ,YSU]/wrfout_d07_2018.zarr`           |
+| 1         | Europe       | 15km       | 156x171 | 30s                   | 3h Q, T, U,V above PBL | `[MYJ,YSU]/wrfout_d01.zarr`           |
+| 2         | Germany      | 5km        | 226x271 | 30s                   | 3h Q, T, U,V above PBL | `[MYJ,YSU]/wrfout_d02.zarr` |
+| 3         | Rhine-Neckar | 1km        | 121x156 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d03.zarr`           |
+| 4         | Berlin       | 1km        | 176x171 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d04.zarr`           |
+| 5         | Rhine-Ruhr   | 1km        | 121x131 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d05.zarr`           |
+| 6         | Nuremberg    | 1km        | 121x131 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d06.zarr`           |
+| 7         | Munich       | 1km        | 121x131 | 90m                   | -                      | `[MYJ,YSU]/wrfout_d07.zarr`           |
 
 
 ## Variables
@@ -37,7 +39,7 @@ title: Documentation
 The `BCK` fields using CAMS are initialized with CAMS concentrations and the beginning and the largest domain uses the CAMS concentration fields as boundary conditions.
 The `VPRM` fields are offset by 407 ppm.
 
-| Variable in Swift dataset | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
+| Variable in dataset       | Species            | Emiss. type | Inventory  | Source type    | Sectors                 |
 |:--------------------------|:-------------------|:------------|:-----------|:---------------|:------------------------|
 | CO2_TRAFFIC               | CO<sub>2</sub>     | fossil      | TNO        | area, point    | F1, F2, F3, F4, G, H, I |
 | CO2_AREA                  | CO<sub>2</sub>     | fossil      | TNO        | area           | all except TRAFFIC      |
@@ -53,14 +55,23 @@ The `VPRM` fields are offset by 407 ppm.
 
 The following variables are computed from some of the above WRF output fields.
 
-| Display Name       | Variable in Swift dataset | Calculation                                               |
+| Display Name       | Variable in dataset       | Calculation                                               |
 |:-------------------|:--------------------------|:----------------------------------------------------------|
 | Anthropogenic CO2  | CO2_ANTHRO                | CO2_TRAFFIC + CO2_AREA + CO2_POINT + CO2_BF               |
 | Total CO2          | CO2_TOTAL                 | CO2_ANTHRO + CO2_BCK + CO2_VPRM - 407.                    |
 | Total CO2 (Bio v2) | CO2_TOTAL_V2              | CO2_ANTHRO + CO2_BCK + CO2_VPRM_V2 - 407.                 |
 | Total CO           | CO_TOTAL                  | CO_ANT + CO_BCK                                           |
 | Wind Speed         | wind_speed                | [metpy.calc.wind_speed](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html)([wind_speed_north, wind_speed_east](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216))  |
+| Wind Direction     | wind_direction            | [metpy.calc.wind_direction](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_direction.html)([wind_speed_north, wind_speed_east](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216))  |
+| 10m Wind Speed     | wind_speed_10             | [metpy.calc.wind_speed](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html)([wind_speed_north_10, wind_speed_east_10](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L219-L231))  |
+| 10m Wind Direction | wind_direction_10         | [metpy.calc.wind_direction](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_direction.html)([wind_speed_north_10, wind_speed_east_10](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L219-L231))  |
 
-### Computational structure
-
-In order to minimize deviations from real meteorological conditions, WRF was reinitialized from ERA5 data every 7 days.
+Every file also contains pre-computed statistics information about select variables in the `stats` group.
+The variables which have statistics information available are:
+```
+CO2_AREA, CO2_POINT, CO2_TRAFFIC, CO2_BF, CO2_BCK, CO2_VPRM, CO2_VPRM_V2, CO2_ANTHRO, CO2_TOTAL, CO2_TOTAL_V2, CO_ANT, CO_BCK, CO_TOTAL, air_pressure, wind_north, wind_north_10, wind_east, wind_east_10, wind_speed, wind_speed_10
+```
+For these, the following statistics are available on a per-day and per-height basis:
+```
+min, max, mean, median, 0.2% quantile, 99.8% quantile, 5% quantile, 95% quantile
+```
