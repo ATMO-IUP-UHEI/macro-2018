@@ -17,6 +17,8 @@ title: Documentation
     - urban: (100m x 100m) Local Climate Zones [using w2w v0.5.0](https://github.com/matthiasdemuzere/w2w/tree/30bbaa12032bcbf7ccebdcb4f775f28803416c58) [[Demuzere, 2022]](https://doi.org/10.5194/essd-14-3835-2022)
 - Topography: (res cf. below) COP DEM [M. Galkowski, personal communication]
 
+In order to minimize deviations from real meteorological conditions, WRF was reinitialized from ERA5 data every 7 days with a 12 hour spin-up.
+
 ## Domain setup
 
 | Domain no | Name         | Resolution | Extent  | Topography resolution | Grid nudging           | Zarr file                            |
@@ -60,7 +62,16 @@ The following variables are computed from some of the above WRF output fields.
 | Total CO2 (Bio v2) | CO2_TOTAL_V2              | CO2_ANTHRO + CO2_BCK + CO2_VPRM_V2 - 407.                 |
 | Total CO           | CO_TOTAL                  | CO_ANT + CO_BCK                                           |
 | Wind Speed         | wind_speed                | [metpy.calc.wind_speed](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html)([wind_speed_north, wind_speed_east](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216))  |
+| Wind Direction     | wind_direction            | [metpy.calc.wind_direction](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_direction.html)([wind_speed_north, wind_speed_east](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L201-L216))  |
+| 10m Wind Speed     | wind_speed_10             | [metpy.calc.wind_speed](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_speed.html)([wind_speed_north_10, wind_speed_east_10](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L219-L231))  |
+| 10m Wind Direction | wind_direction_10         | [metpy.calc.wind_direction](https://unidata.github.io/MetPy/latest/api/generated/metpy.calc.wind_direction.html)([wind_speed_north_10, wind_speed_east_10](https://github.com/xarray-contrib/xwrf/blob/7fa32f81a01f3b47fc319d8087c3bb6732240dcc/xwrf/postprocess.py#L219-L231))  |
 
-### Computational structure
-
-In order to minimize deviations from real meteorological conditions, WRF was reinitialized from ERA5 data every 7 days.
+Every file also contains pre-computed statistics information about select variables in the `stats` group.
+The variables which have statistics information available are:
+```
+CO2_AREA, CO2_POINT, CO2_TRAFFIC, CO2_BF, CO2_BCK, CO2_VPRM, CO2_VPRM_V2, CO2_ANTHRO, CO2_TOTAL, CO2_TOTAL_V2, CO_ANT, CO_BCK, CO_TOTAL, air_pressure, wind_north, wind_north_10, wind_east, wind_east_10, wind_speed, wind_speed_10
+```
+For these, the following statistics are available on a per-day and per-height basis:
+```
+min, max, mean, median, 0.2% quantile, 99.8% quantile, 5% quantile, 95% quantile
+```

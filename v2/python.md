@@ -55,4 +55,4 @@ ds = xr.open_datatree(
     )
 ```
 Finally we can use the remote data like it were on our computer locally.
-The available WRF meteorology and tracer fields are described in the [documentation page](documentation.md#data-structure).
+The available data including WRF tracer fields, meteorology and statistics are described in the [documentation page](documentation.md#data-structure).
