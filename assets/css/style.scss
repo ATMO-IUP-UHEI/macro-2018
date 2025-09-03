@@ -135,6 +135,152 @@ body {
   #fullplot {
     width: 100%; /* Ensure full width */
   }
+
+  // Reorganize controls when sidebar collapses
+  #container {
+    flex-direction: column; /* Stack controls above plot */
+  }
+
+  #controls {
+    flex-direction: column; /* Stack controls vertically */
+    margin-right: 0;
+    margin-bottom: 20px;
+    align-items: stretch;
+    width: 100%;
+    gap: 15px; /* Add spacing between dropdown controls and z-slider */
+  }
+
+  #dropdown-controls {
+    flex-direction: row; /* Arrange dropdowns horizontally */
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    gap: 10px; /* Add spacing between dropdowns */
+    
+    div {
+      flex: 1;
+      min-width: 150px; /* Minimum width for each dropdown container */
+      margin-bottom: 5px; /* Reduce bottom margin */
+    }
+    
+    label {
+      font-size: 1rem; /* Smaller labels for compact layout */
+      white-space: nowrap;
+    }
+    
+    select {
+      margin-left: 5px; /* Reduce left margin */
+    }
+  }
+
+  #zslider-container {
+    flex-direction: column; /* Stack label, slider, and ticks vertically */
+    align-items: stretch;
+    width: 100%;
+    
+    #zlabel {
+      margin-bottom: 10px;
+      margin-right: 0;
+      text-align: left;
+      white-space: nowrap;
+    }
+    
+    #zslider-inner {
+      flex-direction: column; /* Stack slider and ticks vertically */
+      align-items: stretch;
+      width: 100%;
+      height: auto; /* Override the base height: 100% */
+    }
+    
+    #zslider {
+      /* Reset all base styles completely */
+      all: unset !important; /* Reset all inherited styles */
+      
+      /* Apply horizontal slider styles */
+      width: 100%; /* Full width for horizontal slider */
+      height: 6px; /* Set height for horizontal slider */
+      margin-bottom: 5px; /* Small gap between slider and ticks */
+      padding: 0; /* Remove default padding */
+      box-sizing: border-box; /* Include padding in width calculation */
+      
+      /* Custom slider track styling to match time slider */
+      -webkit-appearance: none;
+      appearance: none;
+      background: #efefef; /* Gray track like time slider */
+      border-radius: 3px;
+      outline: none;
+      direction: ltr; /* Right-to-left to match the tick mark order */
+      
+      /* Hide the default datalist styling that might cause doubling */
+      &::-webkit-list-button {
+        display: none;
+      }
+      
+      &::-webkit-calendar-picker-indicator {
+        display: none;
+      }
+      box-sizing: border-box; /* Include padding in width calculation */
+      
+      /* Custom slider track styling to match time slider */
+      -webkit-appearance: none;
+      appearance: none;
+      background: #efefef; /* Gray track like time slider */
+      border-radius: 3px;
+      outline: none;
+      
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8px;
+        background: #efefef; /* Gray track */
+        border-radius: 4px;
+        border: 1px solid #b2b2b2; /* Light border for better visibility */
+      }
+      
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        background: #0075ff; /* Blue thumb like time slider */
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        margin-top: -5px; /* Center the thumb vertically on the track */
+        position: relative;
+        z-index: 2;
+      }
+      
+      &::-moz-range-track {
+        width: 100%;
+        height: 6px;
+        background: #efefef; /* Gray track */
+        border-radius: 3px;
+        border: none;
+      }
+      
+      &::-moz-range-thumb {
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        background: #0075ff; /* Blue thumb like time slider */
+        cursor: pointer;
+        border: none;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        margin-top: -5px; /* Center the thumb vertically on the track */
+        position: relative;
+        z-index: 2;
+      }
+    }
+    
+    #ztickmarks {
+      display: flex;
+      flex-direction: row-reverse; /* Reverse to match RTL slider direction */
+      justify-content: space-between;
+      width: 100%;
+      height: auto;
+      margin-left: 0;
+      font-size: .75rem; /* Smaller font for compact display */
+    }
+  }
 }
 
 #version-switcher {
