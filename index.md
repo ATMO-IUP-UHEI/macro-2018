@@ -112,7 +112,9 @@ This dataset contains one year of 1km resolved CO<sub>2</sub> and CO enhancement
 These domains are embedded in the Germany domain at 5km resolution and the Europe domain at 15km resolution.
 There are two simulations available using two different WRF boundary layer schemes: MYJ (Mellor-Yamada-Janjic) [Yanjic, 2002] and YSU (Yonsei University) [[Hong, 2006]](https://doi.org/10.1175/MWR3199.1).
 
-- Contributors: <a class="enc" href="znvygb:yhxnf.cvym@vhc.hav-urvqryoret.qr">Lukas Pilz</a>, <a class="enc" href="znvygb:fnanz.ineqnt@hav-urvqryoret.qr">Sanam Vardag</a> ([GHG Simulation Group](https://www.iup.uni-heidelberg.de/de/forschung/atmosphaere/simulation-von-treibhausgasen-in-der-atmosphaere-vardag-gruppe), Institute of Environmental Physics, Heidelberg University)
+- Contacts: <a class="enc" href="znvygb:yhxnf.cvym@vhc.hav-urvqryoret.qr">Lukas Pilz</a>, <a class="enc" href="znvygb:fnanz.ineqnt@hav-urvqryoret.qr">Sanam Vardag</a> ([GHG Simulation Group](https://www.iup.uni-heidelberg.de/de/forschung/atmosphaere/simulation-von-treibhausgasen-in-der-atmosphaere-vardag-gruppe), Institute of Environmental Physics, Heidelberg University)
+- Contributors: Hugo Denier van der Gon, Theo Glauch, Julia Marshall
+- Cite as: `Pilz, Lukas; Denier van der Gon, Hugo; Glauch, Theo; Marshall, Julia; Vardag, Sanam N. (2025). MACRO-2018 - High-Resolution Simulation of CO and CO2 concentrations over German Metropolitan Areas for 2018 using WRF-Chem. World Data Center for Climate (WDCC) at DKRZ. https://doi.org/10.26050/WDCC/MACRO-2018`
 - Time period: 1.1.2018 - 31.12.2018
     - reinitialization every 7 days from ERA5 meteorology (12 hours spin up)
 
