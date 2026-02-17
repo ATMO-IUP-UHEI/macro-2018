@@ -11,7 +11,7 @@ Endpoint
 : `https://s3.eu-dkrz-1.dkrz.cloud/`
 
 Path
-: <code>/bb1170/public/MACRO-2018/<b>[MYJ/YSU]</b>/wrfout_d<b>0X</b>.zarr<\code>
+: <code>/bb1170/public/MACRO-2018/<b>[MYJ/YSU]</b>/wrfout_d<b>0X</b>.zarr</code>
 
 Here, the `[MYJ/YSU]` string stands for the MYJ or YSU boundary layer scheme the data was generated with and d`0X` indicates the requested domain (cf. [documentation](documentation.html)).
 This `zarr` object on the S3-Bucket can be accessed in many different languages.
