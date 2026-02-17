@@ -19,10 +19,6 @@
   </head>
   <body>
     <header class="page-header" role="banner">
-       {% assign current_version = 'v2' %}
-       {% if page.url contains '/v1/' %}
-         {% assign current_version = 'v1' %}
-       {% endif %}
       <div class="page-header-bg">
         <div class="page-header-bg-eur">
           <img src="{{ '/assets/images/TNO_eur.png' | relative_url }} " />
@@ -30,25 +26,21 @@
         <img src="{{ '/assets/images/TNO_ger.png' | relative_url }} " />
       </div>
       <div class="headline">
-        <h1 class="project-name">{{ site.title | default: site.title | default: site.github.repository_name}}<sup><sub><sup>{{current_version}}</sub></sup></h1>
+        <h1 class="project-name">{{ site.title | default: site.title | default: site.github.repository_name}}</h1>
       </div>
       <h2 class="project-tagline">{{ site.tagline | default: site.description | default: site.github.project_tagline }}</h2>
-      {% include version-switcher.html %}
     </header>
 
     <button id="hamburger-menu" onclick="toggleSidebar()">☰</button>
 
     <div class="sidebar" id="sidebar">
       <ul>
-        <li><b>{{ current_version}}</b></li>
-        <li><a href="{{ current_version | relative_url }}">Home</a></li>
-        <li><a href="{{ current_version | relative_url }}/documentation.html">Documentation</a></li>
+        <li><a href="{{ site.baseurl }}/">Home</a></li>
+        <li><a href="{{ site.baseurl }}/documentation.html">Documentation</a></li>
         <li>Data Access</li>
         <ul>
-          <li><a href="{{ current_version | relative_url }}/python.html">Using Python</a></li>
-          {% if current_version contains 'v1' %}
-          <li><a href="https://swiftbrowser.dkrz.de/public/dkrz_cf06e856-7ed9-4f16-9ffb-3c5526e68a9c/MACRO-2018/{{ current_version }}/">HTTPS Access</a></li>
-          {% endif %}
+          <li><a href="https://doi.org/10.26050/WDCC/MACRO-2018">WDCC</a></li>
+          <li><a href="{{ site.baseurl }}/s3-python.html">S3/Python</a></li>
         </ul>
       </ul>
     </div>
