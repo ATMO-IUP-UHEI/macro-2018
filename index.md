@@ -23,10 +23,7 @@ There are two simulations available using two different WRF boundary layer schem
 ## Access/License
 
 This work is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0).
-Two versions of this dataset exist.
-One is published on the World Data Centre for Climate repository as [MACRO-2018](https://www.wdc-climate.de/ui/entry?acronym=MACRO-2018) under the DOI [10.26050/WDCC/MACRO-2018](https://doi.org/10.26050/WDCC/MACRO-2018).
-Another is available for easy access in a public S3-Bucket at DKRZ.
-Instructions on how to access this data can be found [here](s3-python.html).
+This dataset is published on the World Data Centre for Climate repository as [MACRO-2018](https://www.wdc-climate.de/ui/entry?acronym=MACRO-2018) under the DOI [10.26050/WDCC/MACRO-2018](https://doi.org/10.26050/WDCC/MACRO-2018).
 
 
 ## Acknowledgements
