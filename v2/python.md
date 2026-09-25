@@ -1,3 +1,3 @@
 ---
-redirect_to: "/s3-python"
+redirect_to: "/"
 ---
